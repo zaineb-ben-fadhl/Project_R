@@ -149,12 +149,6 @@ kbl(variables_table, caption = "Description des variables du dataset") %>%
   column_spec(4, width = "30%")
 ```
 
-### Recherches futures
-
-🔬 **Étude longitudinale** : Suivi sur 12-24 mois pour établir causalité  
-🔬 **Analyse qualitative** : Entretiens approfondis sur les mécanismes psychologiques  
-🔬 **Intervention contrôlée** : Test d'efficacité de programmes de réduction d'usage  
-🔬 **Élargissement** : Intégrer données physiologiques (sommeil, activité physique)
 
 ## Contacts et ressources
 
