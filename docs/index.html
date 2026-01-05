@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Zaineb ben Fadhl">
+<meta name="dcterms.date" content="2026-01-05">
+
+<title>Analyse statistique de l’impact des réseaux sociaux sur la santé mentale – Project_R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-72c6edec9233c93ed9f8a4e260728ea8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="thpe.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
+      Project_R
+      </li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Project_R</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Projects</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./qmd/Project_R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Analyse statistique des usages des réseaux sociaux et de leurs effets émotionnels</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Presentations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./qmd/presentation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Impact des Réseaux Sociaux sur la Santé Mentale</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a>
+  <ul class="collapse">
+  <li><a href="#contexte-et-problématique" id="toc-contexte-et-problématique" class="nav-link" data-scroll-target="#contexte-et-problématique"><span class="header-section-number">1.1</span> Contexte et problématique</a></li>
+  <li><a href="#objectifs-du-projet" id="toc-objectifs-du-projet" class="nav-link" data-scroll-target="#objectifs-du-projet"><span class="header-section-number">1.2</span> Objectifs du projet</a></li>
+  </ul></li>
+  <li><a href="#méthodologie" id="toc-méthodologie" class="nav-link" data-scroll-target="#méthodologie"><span class="header-section-number">2</span> Méthodologie</a></li>
+  <li><a href="#dataset-et-variables" id="toc-dataset-et-variables" class="nav-link" data-scroll-target="#dataset-et-variables"><span class="header-section-number">3</span> Dataset et Variables</a>
+  <ul class="collapse">
+  <li><a href="#description-du-dataset" id="toc-description-du-dataset" class="nav-link" data-scroll-target="#description-du-dataset"><span class="header-section-number">3.1</span> Description du dataset</a></li>
+  <li><a href="#variables-principales" id="toc-variables-principales" class="nav-link" data-scroll-target="#variables-principales"><span class="header-section-number">3.2</span> Variables principales</a></li>
+  </ul></li>
+  <li><a href="#résultats-clés" id="toc-résultats-clés" class="nav-link" data-scroll-target="#résultats-clés"><span class="header-section-number">4</span> Résultats Clés</a>
+  <ul class="collapse">
+  <li><a href="#relation-usage-anxiété-confirmée" id="toc-relation-usage-anxiété-confirmée" class="nav-link" data-scroll-target="#relation-usage-anxiété-confirmée"><span class="header-section-number">4.1</span> 1. Relation usage-anxiété confirmée</a></li>
+  <li><a href="#profils-dutilisateurs-identifiés" id="toc-profils-dutilisateurs-identifiés" class="nav-link" data-scroll-target="#profils-dutilisateurs-identifiés"><span class="header-section-number">4.2</span> 2. Profils d’utilisateurs identifiés</a></li>
+  <li><a href="#impact-différencié-des-plateformes" id="toc-impact-différencié-des-plateformes" class="nav-link" data-scroll-target="#impact-différencié-des-plateformes"><span class="header-section-number">4.3</span> 3. Impact différencié des plateformes</a></li>
+  <li><a href="#modèle-prédictif" id="toc-modèle-prédictif" class="nav-link" data-scroll-target="#modèle-prédictif"><span class="header-section-number">4.4</span> 4. Modèle prédictif</a></li>
+  </ul></li>
+  <li><a href="#recommandations" id="toc-recommandations" class="nav-link" data-scroll-target="#recommandations"><span class="header-section-number">5</span> Recommandations</a>
+  <ul class="collapse">
+  <li><a href="#pour-les-individus" id="toc-pour-les-individus" class="nav-link" data-scroll-target="#pour-les-individus"><span class="header-section-number">5.1</span> Pour les individus</a></li>
+  <li><a href="#pour-les-professionnels-de-santé" id="toc-pour-les-professionnels-de-santé" class="nav-link" data-scroll-target="#pour-les-professionnels-de-santé"><span class="header-section-number">5.2</span> Pour les professionnels de santé</a></li>
+  <li><a href="#pour-les-décideurs-politiques" id="toc-pour-les-décideurs-politiques" class="nav-link" data-scroll-target="#pour-les-décideurs-politiques"><span class="header-section-number">5.3</span> Pour les décideurs politiques</a></li>
+  </ul></li>
+  <li><a href="#livrables-du-projet" id="toc-livrables-du-projet" class="nav-link" data-scroll-target="#livrables-du-projet"><span class="header-section-number">6</span> Livrables du projet</a>
+  <ul class="collapse">
+  <li><a href="#documents-analytiques" id="toc-documents-analytiques" class="nav-link" data-scroll-target="#documents-analytiques"><span class="header-section-number">6.1</span> Documents analytiques</a></li>
+  <li><a href="#code-source" id="toc-code-source" class="nav-link" data-scroll-target="#code-source"><span class="header-section-number">6.2</span> Code source</a></li>
+  </ul></li>
+  <li><a href="#perspectives-et-limites" id="toc-perspectives-et-limites" class="nav-link" data-scroll-target="#perspectives-et-limites"><span class="header-section-number">7</span> Perspectives et limites</a>
+  <ul class="collapse">
+  <li><a href="#forces-de-létude" id="toc-forces-de-létude" class="nav-link" data-scroll-target="#forces-de-létude"><span class="header-section-number">7.1</span> Forces de l’étude</a></li>
+  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations"><span class="header-section-number">7.2</span> Limitations</a></li>
+  <li><a href="#recherches-futures" id="toc-recherches-futures" class="nav-link" data-scroll-target="#recherches-futures"><span class="header-section-number">7.3</span> Recherches futures</a></li>
+  </ul></li>
+  <li><a href="#contacts-et-ressources" id="toc-contacts-et-ressources" class="nav-link" data-scroll-target="#contacts-et-ressources"><span class="header-section-number">8</span> Contacts et ressources</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/zaineb-ben-fadhl/Project_R/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/zaineb-ben-fadhl/Project_R/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Analyse statistique de l’impact des réseaux sociaux sur la santé mentale</h1>
+<p class="subtitle lead">Projet de fin d’études - Statistiques Appliquées avec R</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Zaineb ben Fadhl </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 5, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
+<p>Ce projet présente une analyse statistique complète visant à <strong>quantifier la relation entre l’usage des réseaux sociaux et l’anxiété numérique</strong>. L’étude combine des méthodes statistiques avancées avec la visualisation de données pour fournir des insights actionnables aux professionnels de santé mentale et aux décideurs politiques.</p>
+<section id="contexte-et-problématique" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="contexte-et-problématique"><span class="header-section-number">1.1</span> Contexte et problématique</h3>
+<p>À l’ère du numérique, <strong>4,9 milliards d’utilisateurs</strong> passent en moyenne <strong>2h30 par jour</strong> sur les réseaux sociaux. Cette hyperconnexion s’accompagne d’une <strong>augmentation significative des troubles anxieux</strong>, particulièrement chez les jeunes adultes. Le <strong>paradoxe de l’hyperconnexion</strong> - censés nous rapprocher, ces outils génèrent comparaison sociale, FOMO (Fear of Missing Out) et dépendance comportementale.</p>
+</section>
+<section id="objectifs-du-projet" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="objectifs-du-projet"><span class="header-section-number">1.2</span> Objectifs du projet</h3>
+<ol type="1">
+<li><strong>Quantifier la relation</strong> entre temps d’usage quotidien et prévalence de l’anxiété</li>
+<li><strong>Identifier les profils d’utilisateurs</strong> à risque élevé</li>
+<li><strong>Comparer l’impact émotionnel</strong> des différentes plateformes sociales</li>
+<li><strong>Développer un modèle prédictif</strong> de l’anxiété numérique</li>
+<li><strong>Proposer des interventions ciblées</strong> pour la prévention et l’accompagnement</li>
+</ol>
+</section>
+</section>
+<section id="méthodologie" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="méthodologie"><span class="header-section-number">2</span> Méthodologie</h2>
+<p>L’approche méthodologique combine :</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small">
+<caption>Cadre méthodologique du projet</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Étape</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Outils</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Résultat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1. Acquisition des données</td>
+<td style="text-align: left;">readr, CSV dataset N=1000</td>
+<td style="text-align: left;">Dataset structuré (10 variables)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2. Nettoyage et prétraitement</td>
+<td style="text-align: left;">dplyr, janitor, stringr</td>
+<td style="text-align: left;">Données harmonisées et validées</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3. Analyse exploratoire</td>
+<td style="text-align: left;">ggplot2, corrplot</td>
+<td style="text-align: left;">Tendances usage-anxiété identifiées</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4. Construction d'indicateurs</td>
+<td style="text-align: left;">Scores d'engagement, variables dérivées</td>
+<td style="text-align: left;">Indice de Risque Psychologique</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5. Modélisation statistique</td>
+<td style="text-align: left;">Régression logistique multivariée</td>
+<td style="text-align: left;">Odds ratios et facteurs prédictifs</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6. Segmentation</td>
+<td style="text-align: left;">K-means clustering</td>
+<td style="text-align: left;">3 profils d'utilisateurs distincts</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">7. Visualisation</td>
+<td style="text-align: left;">ggplot2, gridExtra, thèmes personnalisés</td>
+<td style="text-align: left;">Tableaux de bord analytiques</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">8. Interprétation</td>
+<td style="text-align: left;">Analyse critique, recommandations</td>
+<td style="text-align: left;">Rapport avec recommandations</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="dataset-et-variables" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="dataset-et-variables"><span class="header-section-number">3</span> Dataset et Variables</h2>
+<section id="description-du-dataset" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="description-du-dataset"><span class="header-section-number">3.1</span> Description du dataset</h3>
+<ul>
+<li><strong>Source</strong> : Données synthétiques représentatives d’utilisateurs de réseaux sociaux</li>
+<li><strong>Taille</strong> : N = 1000 observations après nettoyage</li>
+<li><strong>Période</strong> : Décembre 2024 - Janvier 2025</li>
+<li><strong>Scope géographique</strong> : Utilisateurs internationaux, 18-70 ans</li>
+</ul>
+</section>
+<section id="variables-principales" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="variables-principales"><span class="header-section-number">3.2</span> Variables principales</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small">
+<caption>Description des variables du dataset</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Variable</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Type</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Description</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Rôle</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Age</td>
+<td style="text-align: left;">Numérique</td>
+<td style="text-align: left;">Âge de l'utilisateur (18-70 ans)</td>
+<td style="text-align: left; width: 30%;">Prédicteur</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gender</td>
+<td style="text-align: left;">Catégorielle</td>
+<td style="text-align: left;">Male, Female, Non-binary</td>
+<td style="text-align: left; width: 30%;">Prédicteur</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Platform</td>
+<td style="text-align: left;">Catégorielle</td>
+<td style="text-align: left;">Instagram, Facebook, Twitter, LinkedIn, etc.</td>
+<td style="text-align: left; width: 30%;">Prédicteur</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Daily_Usage_Time</td>
+<td style="text-align: left;">Numérique</td>
+<td style="text-align: left;">Minutes d'utilisation quotidienne</td>
+<td style="text-align: left; width: 30%;">Prédicteur principal</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Posts_Per_Day</td>
+<td style="text-align: left;">Numérique</td>
+<td style="text-align: left;">Nombre de publications par jour</td>
+<td style="text-align: left; width: 30%;">Prédicteur</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Likes_Received</td>
+<td style="text-align: left;">Numérique</td>
+<td style="text-align: left;">Likes reçus quotidiennement</td>
+<td style="text-align: left; width: 30%;">Prédicteur</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Comments_Received</td>
+<td style="text-align: left;">Numérique</td>
+<td style="text-align: left;">Commentaires reçus quotidiennement</td>
+<td style="text-align: left; width: 30%;">Prédicteur</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Messages_Sent</td>
+<td style="text-align: left;">Numérique</td>
+<td style="text-align: left;">Messages privés envoyés quotidiennement</td>
+<td style="text-align: left; width: 30%;">Prédicteur</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dominant_Emotion</td>
+<td style="text-align: left;">Catégorielle</td>
+<td style="text-align: left;">Anxiety, Happiness, Sadness, Anger, Boredom, Neutral</td>
+<td style="text-align: left; width: 30%;">Variable cible</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Usage_Level</td>
+<td style="text-align: left;">Catégorielle (dérivée)</td>
+<td style="text-align: left;">Faible (&lt;1h), Modéré (1-2h), Élevé (2-3h), Très élevé (&gt;3h)</td>
+<td style="text-align: left; width: 30%;">Variable analytique</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="résultats-clés" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="résultats-clés"><span class="header-section-number">4</span> Résultats Clés</h2>
+<section id="relation-usage-anxiété-confirmée" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="relation-usage-anxiété-confirmée"><span class="header-section-number">4.1</span> 1. Relation usage-anxiété confirmée</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small">
+<caption>Principaux résultats statistiques</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Indicateur</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Valeur</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Interprétation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Corrélation temps d'usage / anxiété</td>
+<td style="text-align: left;">r = +0.45 (p &lt; 0.001)</td>
+<td style="text-align: left; width: 40%;">Corrélation positive significative</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Seuil critique identifié</td>
+<td style="text-align: left;">120 minutes/jour (2 heures)</td>
+<td style="text-align: left; width: 40%;">Point d'inflexion dans la courbe de risque</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Multiplication du risque</td>
+<td style="text-align: left;">×2.7 entre usage faible et très élevé</td>
+<td style="text-align: left; width: 40%;">Le taux d'anxiété triple après 2h/jour</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Taux d'anxiété global</td>
+<td style="text-align: left;">20.8%</td>
+<td style="text-align: left; width: 40%;">1 utilisateur sur 5 présente de l'anxiété</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Population à risque élevé</td>
+<td style="text-align: left;">28.3% (Cluster à haut risque)</td>
+<td style="text-align: left; width: 40%;">Plus d'un quart des utilisateurs en zone dangereuse</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="profils-dutilisateurs-identifiés" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="profils-dutilisateurs-identifiés"><span class="header-section-number">4.2</span> 2. Profils d’utilisateurs identifiés</h3>
+<p>Le clustering K-means (k=3) révèle trois segments distincts :</p>
+<ul>
+<li><strong>Cluster 1 - Utilisateurs modérés (34.9%)</strong> : ~90 min/jour, 12% d’anxiété, profil le plus sain</li>
+<li><strong>Cluster 2 - Occasionnels (36.8%)</strong> : ~75 min/jour, 18% d’anxiété, usage ponctuel</li>
+<li><strong>Cluster 3 - À RISQUE (28.3%)</strong> : ~180 min/jour, <strong>32% d’anxiété</strong>, nécessite intervention</li>
+</ul>
+</section>
+<section id="impact-différencié-des-plateformes" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="impact-différencié-des-plateformes"><span class="header-section-number">4.3</span> 3. Impact différencié des plateformes</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small">
+<caption>Impact émotionnel par plateforme</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Plateforme</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Temps.moyen</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Taux.anxiété</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Caractéristique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; background-color: rgba(255, 235, 238, 255) !important;">Instagram</td>
+<td style="text-align: left; font-weight: bold; background-color: rgba(255, 235, 238, 255) !important;">145 min</td>
+<td style="text-align: left; font-weight: bold; background-color: rgba(255, 235, 238, 255) !important;">**28%**</td>
+<td style="text-align: left; font-weight: bold; background-color: rgba(255, 235, 238, 255) !important;">Comparaison sociale intense</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Facebook</td>
+<td style="text-align: left;">128 min</td>
+<td style="text-align: left;">22%</td>
+<td style="text-align: left;">Contenu émotionnel mixte</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Twitter</td>
+<td style="text-align: left;">115 min</td>
+<td style="text-align: left;">19%</td>
+<td style="text-align: left;">Actualités stressantes</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LinkedIn</td>
+<td style="text-align: left;">68 min</td>
+<td style="text-align: left;">12%</td>
+<td style="text-align: left;">Usage professionnel/utilitaire</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WhatsApp</td>
+<td style="text-align: left;">95 min</td>
+<td style="text-align: left;">15%</td>
+<td style="text-align: left;">Communication interpersonnelle</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="modèle-prédictif" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="modèle-prédictif"><span class="header-section-number">4.4</span> 4. Modèle prédictif</h3>
+<p>Le modèle de régression logistique identifie les facteurs de risque :</p>
+<ul>
+<li><strong>Temps d’usage quotidien</strong> : OR = 1.016 (+1.6% de risque par minute)</li>
+<li><strong>Âge</strong> : OR = 0.982 (effet protecteur modeste)</li>
+<li><strong>Engagement social</strong> : OR = 1.023 (likes, comments, posts)</li>
+</ul>
+<p><strong>Performance du modèle</strong> : Pseudo R² = 0.18, AIC = 892.4</p>
+</section>
+</section>
+<section id="recommandations" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="recommandations"><span class="header-section-number">5</span> Recommandations</h2>
+<section id="pour-les-individus" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="pour-les-individus"><span class="header-section-number">5.1</span> Pour les individus</h3>
+<ol type="1">
+<li><strong>Seuil d’alerte</strong> : Limiter l’usage à 2h/jour maximum</li>
+<li><strong>Auto-surveillance</strong> : Utiliser des outils de temps d’écran</li>
+<li><strong>Pauses régulières</strong> : Déconnexion numérique planifiée</li>
+<li><strong>Diversification</strong> : Alterner activités numériques et physiques</li>
+</ol>
+</section>
+<section id="pour-les-professionnels-de-santé" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="pour-les-professionnels-de-santé"><span class="header-section-number">5.2</span> Pour les professionnels de santé</h3>
+<ol type="1">
+<li><strong>Dépistage systématique</strong> : Inclure le temps d’écran dans les consultations</li>
+<li><strong>Interventions ciblées</strong> : Programme pour utilisateurs intensifs d’Instagram</li>
+<li><strong>Accompagnement du Cluster 3</strong> : 28.3% de la population nécessite attention</li>
+<li><strong>Éducation thérapeutique</strong> : Sensibilisation aux signes de dépendance</li>
+</ol>
+</section>
+<section id="pour-les-décideurs-politiques" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="pour-les-décideurs-politiques"><span class="header-section-number">5.3</span> Pour les décideurs politiques</h3>
+<ol type="1">
+<li><strong>Éducation numérique</strong> : Intégration dans les programmes scolaires</li>
+<li><strong>Régulation</strong> : Encadrer les fonctionnalités addictives des plateformes</li>
+<li><strong>Soutien à la recherche</strong> : Études longitudinales sur les effets à long terme</li>
+<li><strong>Droit à la déconnexion</strong> : Politiques de déconnexion au travail/études</li>
+</ol>
+</section>
+</section>
+<section id="livrables-du-projet" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="livrables-du-projet"><span class="header-section-number">6</span> Livrables du projet</h2>
+<section id="documents-analytiques" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="documents-analytiques"><span class="header-section-number">6.1</span> Documents analytiques</h3>
+<ul>
+<li><strong><a href="presentation.html">Présentation Revealjs</a></strong> : Slides interactives avec analyses WebR en temps réel</li>
+<li><strong><a href="rapport-complet.html">Rapport détaillé</a></strong> : Document live-html avec code R reproductible</li>
+<li><strong>Dataset nettoyé</strong> : <code>data/train_clean.csv</code> prêt pour analyses complémentaires</li>
+</ul>
+</section>
+<section id="code-source" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="code-source"><span class="header-section-number">6.2</span> Code source</h3>
+<ul>
+<li><strong>Scripts R</strong> : Pipeline complet de nettoyage, analyse et visualisation</li>
+<li><strong>Fonctions réutilisables</strong> : Bibliothèque de fonctions pour analyses similaires</li>
+<li><strong>Documentation</strong> : Guide méthodologique pour reproduction de l’étude</li>
+</ul>
+</section>
+</section>
+<section id="perspectives-et-limites" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="perspectives-et-limites"><span class="header-section-number">7</span> Perspectives et limites</h2>
+<section id="forces-de-létude" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="forces-de-létude"><span class="header-section-number">7.1</span> Forces de l’étude</h3>
+<p>✅ <strong>Approche multidimensionnelle</strong> : Combine statistiques descriptives, inférentielles et prédictives<br>
+✅ <strong>Segmentation actionnable</strong> : Identification claire des profils à risque<br>
+✅ <strong>Visualisations riches</strong> : Graphiques interactifs facilitant l’interprétation<br>
+✅ <strong>Reproductibilité</strong> : Code R documenté et dataset accessible</p>
+</section>
+<section id="limitations" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="limitations"><span class="header-section-number">7.2</span> Limitations</h3>
+<p>⚠️ <strong>Nature transversale</strong> : Pas de lien de causalité direct établi<br>
+⚠️ <strong>Auto-déclaration</strong> : Biais potentiel dans le reporting des émotions<br>
+⚠️ <strong>Échantillon</strong> : Non-probabiliste, représentativité à nuancer<br>
+⚠️ <strong>Variables omises</strong> : Autres facteurs de stress non mesurés</p>
+</section>
+<section id="recherches-futures" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="recherches-futures"><span class="header-section-number">7.3</span> Recherches futures</h3>
+<p>🔬 <strong>Étude longitudinale</strong> : Suivi sur 12-24 mois pour établir causalité<br>
+🔬 <strong>Analyse qualitative</strong> : Entretiens approfondis sur les mécanismes psychologiques<br>
+🔬 <strong>Intervention contrôlée</strong> : Test d’efficacité de programmes de réduction d’usage<br>
+🔬 <strong>Élargissement</strong> : Intégrer données physiologiques (sommeil, activité physique)</p>
+</section>
+</section>
+<section id="contacts-et-ressources" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="contacts-et-ressources"><span class="header-section-number">8</span> Contacts et ressources</h2>
+<p><strong>Auteur</strong> : Zaineb ben Fadhl<br>
+<strong>Email</strong> : zaineb.benfadhl@polytechnicien.tn<br>
+<strong>GitHub</strong> : <a href="https://github.com/votre-repo">github.com/votre-repo</a><br>
+<strong>LinkedIn</strong> : <a href="https://linkedin.com/in/votre-profil">linkedin.com/in/votre-profil</a></p>
+<hr>
+<p><em>Ce projet a été réalisé dans le cadre du module “Statistiques Appliquées avec R” - Janvier 2025</em></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/zaineb-ben-fadhl\.github\.io\/Project_R\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/zaineb-ben-fadhl/Project_R/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/zaineb-ben-fadhl/Project_R/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
