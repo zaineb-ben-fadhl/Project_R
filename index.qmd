@@ -1,0 +1,166 @@
+---
+title: "Analyse statistique de l'impact des réseaux sociaux sur la santé mentale"
+subtitle: "Projet de fin d'études - Statistiques Appliquées avec R"
+author: "Zaineb ben Fadhl"
+date: "`r format(Sys.Date(), '%d %B %Y')`"
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    css: styles.css
+    code-fold: true
+    code-overflow: wrap
+---
+
+## Introduction
+
+Ce projet présente une analyse statistique complète visant à **quantifier la relation entre l'usage des réseaux sociaux et l'anxiété numérique**. L'étude combine des méthodes statistiques avancées avec la visualisation de données pour fournir des insights actionnables aux professionnels de santé mentale et aux décideurs politiques.
+
+### Contexte et problématique
+
+À l'ère du numérique, **4,9 milliards d'utilisateurs** passent en moyenne **2h30 par jour** sur les réseaux sociaux. Cette hyperconnexion s'accompagne d'une **augmentation significative des troubles anxieux**, particulièrement chez les jeunes adultes. Le **paradoxe de l'hyperconnexion** - censés nous rapprocher, ces outils génèrent comparaison sociale, FOMO (Fear of Missing Out) et dépendance comportementale.
+
+### Objectifs du projet
+
+1. **Quantifier la relation** entre temps d'usage quotidien et prévalence de l'anxiété
+2. **Identifier les profils d'utilisateurs** à risque élevé
+3. **Comparer l'impact émotionnel** des différentes plateformes sociales
+4. **Développer un modèle prédictif** de l'anxiété numérique
+5. **Proposer des interventions ciblées** pour la prévention et l'accompagnement
+
+## Méthodologie
+
+L'approche méthodologique combine :
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+library(knitr)
+library(kableExtra)
+
+method_table <- data.frame(
+  Étape = c(
+    "1. Acquisition des données",
+    "2. Nettoyage et prétraitement",
+    "3. Analyse exploratoire",
+    "4. Construction d'indicateurs",
+    "5. Modélisation statistique",
+    "6. Segmentation",
+    "7. Visualisation",
+    "8. Interprétation"
+  ),
+  Outils = c(
+    "readr, CSV dataset N=1000",
+    "dplyr, janitor, stringr",
+    "ggplot2, corrplot",
+    "Scores d'engagement, variables dérivées",
+    "Régression logistique multivariée",
+    "K-means clustering",
+    "ggplot2, gridExtra, thèmes personnalisés",
+    "Analyse critique, recommandations"
+  ),
+  Résultat = c(
+    "Dataset structuré (10 variables)",
+    "Données harmonisées et validées",
+    "Tendances usage-anxiété identifiées",
+    "Indice de Risque Psychologique",
+    "Odds ratios et facteurs prédictifs",
+    "3 profils d'utilisateurs distincts",
+    "Tableaux de bord analytiques",
+    "Rapport avec recommandations"
+  )
+)
+
+kbl(method_table, caption = "Cadre méthodologique du projet") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+```
+
+## Dataset et Variables
+
+### Description du dataset
+
+- **Source** : Données synthétiques représentatives d'utilisateurs de réseaux sociaux
+- **Taille** : N = 1000 observations après nettoyage
+- **Période** : Décembre 2024 - Janvier 2025
+- **Scope géographique** : Utilisateurs internationaux, 18-70 ans
+
+### Variables principales
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+variables_table <- data.frame(
+  Variable = c(
+    "Age", 
+    "Gender", 
+    "Platform",
+    "Daily_Usage_Time",
+    "Posts_Per_Day",
+    "Likes_Received",
+    "Comments_Received",
+    "Messages_Sent",
+    "Dominant_Emotion",
+    "Usage_Level"
+  ),
+  Type = c(
+    "Numérique",
+    "Catégorielle",
+    "Catégorielle",
+    "Numérique",
+    "Numérique",
+    "Numérique",
+    "Numérique",
+    "Numérique",
+    "Catégorielle",
+    "Catégorielle (dérivée)"
+  ),
+  Description = c(
+    "Âge de l'utilisateur (18-70 ans)",
+    "Male, Female, Non-binary",
+    "Instagram, Facebook, Twitter, LinkedIn, etc.",
+    "Minutes d'utilisation quotidienne",
+    "Nombre de publications par jour",
+    "Likes reçus quotidiennement",
+    "Commentaires reçus quotidiennement",
+    "Messages privés envoyés quotidiennement",
+    "Anxiety, Happiness, Sadness, Anger, Boredom, Neutral",
+    "Faible (<1h), Modéré (1-2h), Élevé (2-3h), Très élevé (>3h)"
+  ),
+  Rôle = c(
+    "Prédicteur",
+    "Prédicteur",
+    "Prédicteur",
+    "Prédicteur principal",
+    "Prédicteur",
+    "Prédicteur",
+    "Prédicteur",
+    "Prédicteur",
+    "Variable cible",
+    "Variable analytique"
+  )
+)
+
+kbl(variables_table, caption = "Description des variables du dataset") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed")) %>%
+  column_spec(4, width = "30%")
+```
+
+### Recherches futures
+
+🔬 **Étude longitudinale** : Suivi sur 12-24 mois pour établir causalité  
+🔬 **Analyse qualitative** : Entretiens approfondis sur les mécanismes psychologiques  
+🔬 **Intervention contrôlée** : Test d'efficacité de programmes de réduction d'usage  
+🔬 **Élargissement** : Intégrer données physiologiques (sommeil, activité physique)
+
+## Contacts et ressources
+
+**Auteur** : Zaineb ben Fadhl  
+**Email** : zaineb.benfadhl@polytechnicien.tn  
+
+---
+
+*Ce projet a été réalisé dans le cadre du module "Statistiques Appliquées avec R" - Janvier 2025*
