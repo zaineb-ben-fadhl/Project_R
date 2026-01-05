@@ -29,7 +29,7 @@ jobs:
 
       - name: Install R packages
         run: |
-          install.packages(c('dplyr', 'ggplot2', 'readr'))
+          install.packages(c('dplyr', 'ggplot2', 'readr', 'tidyr', 'lubridate'))
         shell: Rscript {0}
 
       - name: Render Quarto Project
@@ -37,9 +37,9 @@ jobs:
           quarto render
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3  # ✅ Changé de v2 à v3
         with:
-          path: _site
+          path: docs  # ✅ Changé de _site à docs (selon votre _quarto.yml)
 
   deploy:
     needs: build
@@ -50,4 +50,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4  # ✅ Changé de v2 à v4
