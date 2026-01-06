@@ -408,11 +408,7 @@ p2 <- ggplot(data, aes(x = age)) +
 grid.arrange(p1, p2, ncol = 2)
 
 ```
-Interprétation des graphiques :
 
-Graphique gauche : La distribution du temps d'usage montre une asymétrie positive, indiquant que quelques utilisateurs ont des temps d'usage très élevés. La moyenne et la médiane proches suggèrent une distribution relativement équilibrée.
-
-Graphique droit : La distribution d'âge présente plusieurs modes, reflétant probablement différentes générations d'utilisateurs. La concentration autour de 25-30 ans correspond à la population jeune adulte, principale utilisatrice des réseaux sociaux.
 
 ###  4.2 Analyse comparative par genre et âge
 
@@ -598,11 +594,7 @@ p6 <- ggplot(platform_emotion_matrix,
 
 grid.arrange(p5, p6, ncol = 2)
 ```
-Interprétation des graphiques :
 
-Graphique gauche (Plateformes) : Instagram domine nettement en termes de temps d'engagement moyen, suivi de Facebook. LinkedIn présente l'utilisation la plus faible, reflétant sa nature professionnelle. La taille relative des barres montre la popularité de chaque plateforme.
-
-Graphique droit (Heatmap) : Cette visualisation révèle des associations spécifiques plateforme-émotion. Par exemple, LinkedIn est fortement associé à l'ennui (Boredom), tandis qu'Instagram génère à la fois du bonheur et de l'anxiété. Ces patterns suggèrent que différentes plateformes répondent à différents besoins psychologiques.
 
 ###  4.4 Relation usage-anxiété
 
@@ -850,9 +842,10 @@ cat("📊 PROFILS DES CLUSTERS IDENTIFIÉS:\n")
 print(cluster_profile)
 
 # Visualisation des clusters
+# Utiliser type = "norm" au lieu du type par défaut "t"
 p10 <- ggplot(data, aes(x = daily_usage_time_minutes, y = posts_per_day, color = cluster)) +
   geom_point(alpha = 0.6, size = 2.5) +
-  stat_ellipse(level = 0.95, linewidth = 1, alpha = 0.3) +
+  stat_ellipse(type = "norm", level = 0.95, linewidth = 1, alpha = 0.3) +
   geom_point(data = cluster_profile, 
              aes(x = avg_usage, y = avg_posts),
              shape = 17, size = 5, color = "black") +
@@ -877,15 +870,56 @@ p10 <- ggplot(data, aes(x = daily_usage_time_minutes, y = posts_per_day, color =
 
 print(p10)
 ```
-Interprétation : Le clustering identifie trois segments distincts d'utilisateurs :
+ Interprétation du Clustering : 3 Profils Distincts
+ Résultats du Clustering K-means (k=3)
+Le clustering identifie trois segments distincts d'utilisateurs avec des résultats contre-intuitifs :
 
-Cluster 1 (34.9%) : Utilisateurs modérés avec faible anxiété - profil le plus sain
+🟡 Cluster 1 (42.2%) : Usage Modéré - Anxiété Modérée
+Profil : Utilisateurs "moyens"
 
-Cluster 2 (36.8%) : Faible usage et engagement - utilisateurs occasionnels
+Proportion : Plus grand groupe (42%)
+Usage quotidien : ~84 minutes/jour
+Anxiété : 21.1% - taux le plus élevé des trois clusters (!!)
+Caractéristiques :
 
-Cluster 3 (28.3%) : Fort usage et haute anxiété - groupe à risque nécessitant une attention particulière
+Engagement modéré
+Ni très actifs, ni très passifs
+Paradoxalement le groupe le MOINS bien protégé
 
-La méthode du coude confirme que k=3 est un choix optimal, offrant un bon compromis entre simplicité et pouvoir discriminatoire.
+
+
+ Interprétation : Groupe intermédiaire sans stratégie claire d'usage
+
+🟢Cluster 2 (31.2%) : Usage Prudent - Profil Optimal
+Profil : Les "utilisateurs sains" ✅
+
+Proportion : Second groupe (31%)
+Usage quotidien : ~67 minutes/jour (le plus faible)
+Anxiété : 16.3% - taux le PLUS BAS ✅
+Caractéristiques :
+
+Usage limité et contrôlé
+Engagement raisonnable
+Le profil à promouvoir
+
+
+
+💡 Interprétation : Usage modéré = protection optimale contre l'anxiété
+
+🔴 Cluster 3 (26.6%) : Usage Intensif - Paradoxe Majeur
+Profil : Les "power users" résilients (!?)
+
+Proportion : Plus petit groupe (27%)
+Usage quotidien : ~150 minutes/jour (le plus élevé - 2.5h)
+Anxiété : 11.3% - taux TRÈS BAS (!!)
+Caractéristiques :
+
+Engagement très élevé
+Usage intensif mais...
+Moins anxieux que les autres 
+
+
+
 
 ## Étape 6 : Synthèse et recommandations
 ```{webr-r}
@@ -964,28 +998,7 @@ cat("spécifiques et de formuler des recommandations actionnables pour les déci
 cat("politiques, les professionnels de santé et les éducateurs.\n")
 
 ```
-Interprétation finale : Cette synthèse présente une vue d'ensemble cohérente des résultats. L'analyse confirme l'hypothèse principale tout en nuancant notre compréhension des mécanismes en jeu. Les recommandations proposées sont directement dérivées des insights analytiques et ciblent différents niveaux d'intervention (individuel, communautaire, politique).
+
 
 ## Conclusion
 Cette étude démontre la puissance des méthodes analytiques modernes pour comprendre les relations complexes entre comportements numériques et santé mentale. L'approche méthodologique rigoureuse, combinant statistiques descriptives, modélisation prédictive et segmentation, fournit des insights actionnables pour la prévention et l'intervention.
-
-Contributions principales :
-
-Confirmation quantitative de la relation usage-anxiété
-
-Identification de profils à risque spécifiques
-
-Analyse comparative des plateformes sociales
-
-Proposition d'un cadre d'intervention multidimensionnel
-
-Limitations et perspectives :
-
-Nature transversale des données (causalité à établir)
-
-Auto-déclaration des émotions (biais potentiel)
-
-Nécessité d'études longitudinales pour validation
-
-Cette recherche ouvre la voie à des interventions ciblées et personnalisées pour promouvoir un usage sain des technologies numériques.
-
