@@ -149,11 +149,49 @@ kbl(variables_table, caption = "Description des variables du dataset") %>%
   column_spec(4, width = "30%")
 ```
 
+## Livrables du projet
+
+### Documents analytiques
+
+- **Présentation Revealjs** : Slides interactives avec analyses WebR en temps réel
+- **Rapport détaillé** : Document live-html avec code R reproductible
+- **Dataset nettoyé** : data/train_clean.csv prêt pour analyses complémentaires
+
+### Code source
+
+- **Scripts R** : Pipeline complet de nettoyage, analyse et visualisation
+- **Fonctions réutilisables** : Bibliothèque de fonctions pour analyses similaires
+- **Documentation** : Guide méthodologique pour reproduction de l'étude
+
+## Perspectives et limites
+
+### Forces de l'étude
+
+ **Approche multidimensionnelle** : Combine statistiques descriptives, inférentielles et prédictives  
+ **Segmentation actionnable** : Identification claire des profils à risque  
+ **Visualisations riches** : Graphiques interactifs facilitant l'interprétation  
+ **Reproductibilité** : Code R documenté et dataset accessible
+
+### Limitations
+
+ **Nature transversale** : Pas de lien de causalité direct établi  
+ **Auto-déclaration** : Biais potentiel dans le reporting des émotions  
+ **Échantillon** : Non-probabiliste, représentativité à nuancer  
+ **Variables omises** : Autres facteurs de stress non mesurés
+
+### Recherches futures
+
+ **Étude longitudinale** : Suivi sur 12-24 mois pour établir causalité  
+ **Analyse qualitative** : Entretiens approfondis sur les mécanismes psychologiques  
+ **Intervention contrôlée** : Test d'efficacité de programmes de réduction d'usage  
+ **Élargissement** : Intégrer données physiologiques (sommeil, activité physique)
 
 ## Contacts et ressources
 
 **Auteur** : Zaineb ben Fadhl  
 **Email** : zaineb.benfadhl@polytechnicien.tn  
+**GitHub** : github.com/zaineb-ben-fadhl/Project_R  
+**LinkedIn** : linkedin.com/in/votre-profil
 
 ---
 
