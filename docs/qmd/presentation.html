@@ -426,7 +426,7 @@
   };
 
   // Store cell data
-  globalThis.qwebrCellDetails = [{"code":"library(readr)\nlibrary(dplyr)\nlibrary(tidyr)\n\n# Lire les données brutes\ndata_raw <- suppressWarnings(\n  read_csv(\n    \"https://raw.githubusercontent.com/zaineb-ben-fadhl/Project_R/main/qmd/data/train.csv\",\n    show_col_types = FALSE,\n    na = c(\"\", \"NA\", \"NULL\", \" \", \"unknown\")\n  )\n)\n\n\n\nglimpse(data_raw)\ncat(\"   - Nombre de lignes :\", nrow(data_raw), \"\\n\")\ncat(\"   - Nombre de colonnes :\", ncol(data_raw), \"\\n\")\nprint(summary(data_raw))","id":1,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-1","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"# Correction des inversions Age/Gender\ndata_clean <- data_raw %>%\n  mutate(\n    age_numeric = suppressWarnings(as.numeric(Age)),\n    gender_char = as.character(Gender),\n    \n    age_corrected = ifelse(is.na(age_numeric), as.numeric(gender_char), age_numeric),\n    gender_corrected = ifelse(is.na(age_numeric), Age, gender_char),\n    \n    gender_is_numeric = suppressWarnings(!is.na(as.numeric(Gender))),\n    \n    age_final = ifelse(gender_is_numeric, as.numeric(Gender), age_corrected),\n    gender_final = ifelse(gender_is_numeric, Age, gender_corrected),\n    \n    gender_final = case_when(\n      tolower(gender_final) %in% c(\"male\", \"m\") ~ \"Male\",\n      tolower(gender_final) %in% c(\"female\", \"f\") ~ \"Female\",\n      tolower(gender_final) %in% c(\"non-binary\", \"nb\") ~ \"Non-binary\",\n      TRUE ~ as.character(gender_final)\n    )\n  ) %>%\n  select(\n    user_id = User_ID,\n    age = age_final,\n    gender = gender_final,\n    platform = Platform,\n    daily_usage_time_minutes = `Daily_Usage_Time (minutes)`,\n    posts_per_day = Posts_Per_Day,\n    likes_received_per_day = Likes_Received_Per_Day,\n    comments_received_per_day = Comments_Received_Per_Day,\n    messages_sent_per_day = Messages_Sent_Per_Day,\n    dominant_emotion = Dominant_Emotion\n  )\n\ncat(\"✅ Colonnes standardisées:\", paste(names(data_clean), collapse = \", \"))","id":2,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"echo":"true","editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-2","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"# Nettoyage et validation\ndata <- data_clean %>%\n  mutate(\n    age = as.numeric(age),\n    gender = factor(gender),\n    platform = factor(platform),\n    dominant_emotion = factor(dominant_emotion)\n  ) %>%\n  filter(\n    !is.na(age), !is.na(daily_usage_time_minutes),\n    age >= 18 & age <= 70,\n    daily_usage_time_minutes >= 10 & daily_usage_time_minutes <= 480\n  )\n\ncat(\"📉 Observations initiales:\", nrow(data_clean), \"\\n\")\ncat(\"✅ Observations finales:\", nrow(data), \"\\n\")\ncat(\"🗑️ Observations exclues:\", nrow(data_clean) - nrow(data), \"(\", \n    round((nrow(data_clean) - nrow(data))/nrow(data_clean)*100, 1), \"%)\\n\")","id":3,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"echo":"true","editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-3","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"# Création de variables analytiques\ndata <- data %>%\n  mutate(\n    # Catégories d'usage\n    usage_level = case_when(\n      daily_usage_time_minutes < 60 ~ \"Faible (<1h)\",\n      daily_usage_time_minutes < 120 ~ \"Modéré (1-2h)\",\n      daily_usage_time_minutes < 180 ~ \"Élevé (2-3h)\",\n      TRUE ~ \"Très élevé (>3h)\"\n    ),\n    usage_level = factor(usage_level, \n                        levels = c(\"Faible (<1h)\", \"Modéré (1-2h)\", \n                                  \"Élevé (2-3h)\", \"Très élevé (>3h)\")),\n    \n    # Groupes d'âge\n    age_group = cut(age, breaks = c(18, 25, 30, 35, 70),\n                   labels = c(\"18-25\", \"26-30\", \"31-35\", \"36+\")),\n    \n    # Score d'engagement\n    engagement_score = posts_per_day + \n                      (likes_received_per_day / 10) + \n                      (comments_received_per_day / 5) + \n                      (messages_sent_per_day / 20),\n    \n    # Variable binaire cible\n    anxiety_binary = ifelse(dominant_emotion == \"Anxiety\", 1, 0)\n  )\n\ncat(\"✅ Variables créées: usage_level, age_group, engagement_score, anxiety_binary\\n\")","id":4,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"echo":"true","editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-4","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"cat(\"📊 SYNTHÈSE DESCRIPTIVE\\n\")\ncat(\"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n\\n\")\n\ncat(\"👥 DÉMOGRAPHIE:\\n\")\ncat(\"   • Âge moyen:\", round(mean(data$age), 1), \"ans (SD =\", round(sd(data$age), 1), \")\\n\")\ncat(\"   • Plage d'âge:\", min(data$age), \"-\", max(data$age), \"ans\\n\\n\")\n\ncat(\"📱 USAGE:\\n\")\ncat(\"   • Temps moyen:\", round(mean(data$daily_usage_time_minutes), 1), \"min/jour\\n\")\ncat(\"   • Médiane:\", median(data$daily_usage_time_minutes), \"min/jour\\n\")\ncat(\"   • Écart-type:\", round(sd(data$daily_usage_time_minutes), 1), \"min\\n\\n\")\n\ncat(\"😰 ANXIÉTÉ:\\n\")\ncat(\"   • Taux global:\", round(mean(data$anxiety_binary) * 100, 1), \"%\\n\")\ncat(\"   • Cas d'anxiété:\", sum(data$anxiety_binary), \"/\", nrow(data), \"\\n\\n\")\n\ncat(\"🎭 DISTRIBUTION DES ÉMOTIONS:\\n\")\nemotion_dist <- data %>% \n  count(dominant_emotion) %>% \n  arrange(desc(n)) %>%\n  mutate(pct = round(n/sum(n)*100, 1))\nprint(emotion_dist)","id":5,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"echo":"false","editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-5","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"library(ggplot2)\n\nggplot(data, aes(x = daily_usage_time_minutes)) +\n  geom_histogram(aes(y = after_stat(density)), bins = 30, \n                 fill = \"#4E79A7\", alpha = 0.7, color = \"white\") +\n  geom_density(color = \"#E15759\", linewidth = 1.5) +\n  geom_vline(aes(xintercept = mean(daily_usage_time_minutes)),\n             color = \"red\", linetype = \"dashed\", linewidth = 1) +\n  geom_vline(aes(xintercept = median(daily_usage_time_minutes)),\n             color = \"green\", linetype = \"dashed\", linewidth = 1) +\n  annotate(\"text\", x = mean(data$daily_usage_time_minutes), y = 0.015,\n           label = paste(\"Moyenne =\", round(mean(data$daily_usage_time_minutes), 1), \"min\"),\n           color = \"red\", hjust = -0.1, size = 5, fontface = \"bold\") +\n  labs(\n    title = \"Distribution du Temps d'Utilisation Quotidien\",\n    x = \"Minutes par jour\",\n    y = \"Densité\"\n  ) +\n  theme_minimal(base_size = 14) +\n  theme(plot.title = element_text(hjust = 0.5, face = \"bold\", size = 18))","id":6,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"echo":"false","editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":"5","fig-width":"10","label":"unnamed-chunk-6","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"gender_stats <- data %>%\n  group_by(gender) %>%\n  summarise(moyenne = mean(daily_usage_time_minutes),\n            n = n(), .groups = \"drop\")\n\nggplot(data, aes(x = gender, y = daily_usage_time_minutes, fill = gender)) +\n  geom_boxplot(alpha = 0.7, outlier.color = \"red\") +\n  geom_jitter(width = 0.2, alpha = 0.2, size = 1) +\n  geom_point(data = gender_stats, aes(y = moyenne), \n             shape = 23, size = 5, fill = \"yellow\", color = \"black\") +\n  scale_fill_manual(values = c(\"Male\" = \"#4E79A7\", \"Female\" = \"#F28E2B\", \"Non-binary\" = \"#59A14F\")) +\n  labs(\n    title = \"Temps d'Utilisation par Genre\",\n    subtitle = \"Losange jaune = moyenne\",\n    x = \"Genre\",\n    y = \"Minutes par jour\"\n  ) +\n  theme_minimal(base_size = 14) +\n  theme(plot.title = element_text(hjust = 0.5, face = \"bold\", size = 18),\n        legend.position = \"none\")","id":7,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"echo":"false","editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":"5","fig-width":"10","label":"unnamed-chunk-7","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"anxiety_by_usage <- data %>%\n  group_by(usage_level) %>%\n  summarise(\n    anxiety_rate = mean(anxiety_binary) * 100,\n    n = n(),\n    se = sd(anxiety_binary) / sqrt(n) * 100,\n    .groups = \"drop\"\n  ) %>%\n  mutate(\n    ci_lower = anxiety_rate - 1.96 * se,\n    ci_upper = anxiety_rate + 1.96 * se\n  )\n\nggplot(anxiety_by_usage, aes(x = usage_level, y = anxiety_rate, group = 1)) +\n  geom_line(color = \"#E15759\", linewidth = 2.5) +\n  geom_point(size = 8, color = \"#E15759\", fill = \"white\", shape = 21, stroke = 3) +\n  geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), \n                width = 0.2, color = \"#E15759\", linewidth = 1.5) +\n  geom_text(aes(label = paste0(round(anxiety_rate, 1), \"%\")),\n            vjust = -2, size = 6, fontface = \"bold\", color = \"white\") +\n  geom_hline(yintercept = 20, linetype = \"dashed\", color = \"yellow\", linewidth = 1.5) +\n  annotate(\"text\", x = 3, y = 22, label = \"Seuil d'alerte : 20%\", \n           color = \"yellow\", size = 5, fontface = \"bold\") +\n  labs(\n    title = \"Le Taux d'Anxiété EXPLOSE après 2h/jour\",\n    x = \"Niveau d'Utilisation\",\n    y = \"Taux d'Anxiété (%)\"\n  ) +\n  ylim(0, 40) +\n  theme_minimal(base_size = 16) +\n  theme(\n    plot.title = element_text(hjust = 0.5, face = \"bold\", size = 20, color = \"white\"),\n    axis.text = element_text(color = \"white\", size = 14),\n    axis.title = element_text(color = \"white\", size = 16, face = \"bold\"),\n    panel.grid = element_line(color = \"gray30\"),\n    plot.background = element_rect(fill = \"#1a1a1a\"),\n    panel.background = element_rect(fill = \"#1a1a1a\")\n  )","id":8,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"echo":"false","editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":"6","fig-width":"11","label":"unnamed-chunk-8","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"platform_emotion <- data %>%\n  count(platform, dominant_emotion) %>%\n  group_by(platform) %>%\n  mutate(proportion = n / sum(n) * 100) %>%\n  ungroup()\n\nggplot(platform_emotion, aes(x = platform, y = dominant_emotion, fill = proportion)) +\n  geom_tile(color = \"white\", size = 1) +\n  geom_text(aes(label = paste0(round(proportion, 0), \"%\")),\n            color = \"white\", size = 5, fontface = \"bold\") +\n  scale_fill_gradient(low = \"#FFF5E1\", high = \"#E15759\",\n                     name = \"% Utilisateurs\") +\n  labs(\n    title = \"Carte Émotionnelle des Plateformes Sociales\",\n    x = \"Plateforme\",\n    y = \"Émotion Dominante\"\n  ) +\n  theme_minimal(base_size = 14) +\n  theme(\n    plot.title = element_text(hjust = 0.5, face = \"bold\", size = 18),\n    axis.text.x = element_text(angle = 45, hjust = 1, size = 12),\n    panel.grid = element_blank()\n  ) +\n  coord_fixed(ratio = 1)","id":9,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"echo":"false","editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":"6","fig-width":"11","label":"unnamed-chunk-9","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"# Modèle de prédiction de l'anxiété\nmodel <- glm(anxiety_binary ~ daily_usage_time_minutes + age + gender,\n             data = data, family = binomial)\n\n# Odds Ratios\nodds_ratios <- exp(coef(model))\nprint(round(odds_ratios, 3))","id":10,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"echo":"true","editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-10","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"model <- glm(anxiety_binary ~ daily_usage_time_minutes, \n             data = data, family = binomial)\n\npred_data <- data.frame(\n  daily_usage_time_minutes = seq(min(data$daily_usage_time_minutes),\n                                 max(data$daily_usage_time_minutes),\n                                 length.out = 100)\n)\npred_data$predicted_prob <- predict(model, newdata = pred_data, type = \"response\")\n\nggplot(data, aes(x = daily_usage_time_minutes, y = anxiety_binary)) +\n  geom_point(alpha = 0.3, position = position_jitter(height = 0.02),\n             color = \"#4E79A7\", size = 2) +\n  geom_line(data = pred_data, aes(x = daily_usage_time_minutes, y = predicted_prob),\n            color = \"#E15759\", linewidth = 2) +\n  geom_vline(xintercept = 120, linetype = \"dashed\", color = \"orange\", linewidth = 1.5) +\n  annotate(\"text\", x = 130, y = 0.8, label = \"Seuil critique\\n2h/jour\", \n           color = \"orange\", size = 5, fontface = \"bold\", hjust = 0) +\n  labs(\n    title = \"Probabilité d'Anxiété selon le Temps d'Usage\",\n    subtitle = \"Modèle de régression logistique\",\n    x = \"Temps d'utilisation (minutes/jour)\",\n    y = \"Probabilité d'anxiété\"\n  ) +\n  scale_y_continuous(labels = scales::percent_format()) +\n  theme_minimal(base_size = 14) +\n  theme(plot.title = element_text(hjust = 0.5, face = \"bold\", size = 18))","id":11,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"echo":"false","editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":"5.5","fig-width":"10","label":"unnamed-chunk-11","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"# Clustering\ncluster_data <- data %>%\n  select(daily_usage_time_minutes, posts_per_day, engagement_score, age) %>%\n  scale()\n\nset.seed(123)\nkmeans_result <- kmeans(cluster_data, centers = 3, nstart = 25)\ndata$cluster <- as.factor(kmeans_result$cluster)\n\ncluster_profile <- data %>%\n  group_by(cluster) %>%\n  summarise(\n    n = n(),\n    avg_usage = round(mean(daily_usage_time_minutes), 0),\n    anxiety_rate = round(mean(anxiety_binary) * 100, 1),\n    .groups = \"drop\"\n  ) %>%\n  mutate(pct = round(n/sum(n)*100, 1))\n\nprint(cluster_profile)","id":12,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"echo":"false","editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-12","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}}];
+  globalThis.qwebrCellDetails = [{"code":"library(readr)\nlibrary(dplyr)\nlibrary(tidyr)\n\n# Lire les données brutes\ndata_raw <- suppressWarnings(\n  read_csv(\n    \"https://raw.githubusercontent.com/zaineb-ben-fadhl/Project_R/main/qmd/data/train.csv\",\n    show_col_types = FALSE,\n    na = c(\"\", \"NA\", \"NULL\", \" \", \"unknown\")\n  )\n)\n\nglimpse(data_raw)\ncat(\"   - Nombre de lignes :\", nrow(data_raw), \"\\n\")\ncat(\"   - Nombre de colonnes :\", ncol(data_raw), \"\\n\")\nprint(summary(data_raw))","id":1,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-1","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"# Correction des inversions Age/Gender\ndata_clean <- data_raw %>%\n  mutate(\n    age_numeric = suppressWarnings(as.numeric(Age)),\n    gender_char = as.character(Gender),\n    \n    age_corrected = ifelse(is.na(age_numeric), as.numeric(gender_char), age_numeric),\n    gender_corrected = ifelse(is.na(age_numeric), Age, gender_char),\n    \n    gender_is_numeric = suppressWarnings(!is.na(as.numeric(Gender))),\n    \n    age_final = ifelse(gender_is_numeric, as.numeric(Gender), age_corrected),\n    gender_final = ifelse(gender_is_numeric, Age, gender_corrected),\n    \n    gender_final = case_when(\n      tolower(gender_final) %in% c(\"male\", \"m\") ~ \"Male\",\n      tolower(gender_final) %in% c(\"female\", \"f\") ~ \"Female\",\n      tolower(gender_final) %in% c(\"non-binary\", \"nb\") ~ \"Non-binary\",\n      TRUE ~ as.character(gender_final)\n    )\n  ) %>%\n  select(\n    user_id = User_ID,\n    age = age_final,\n    gender = gender_final,\n    platform = Platform,\n    daily_usage_time_minutes = `Daily_Usage_Time (minutes)`,\n    posts_per_day = Posts_Per_Day,\n    likes_received_per_day = Likes_Received_Per_Day,\n    comments_received_per_day = Comments_Received_Per_Day,\n    messages_sent_per_day = Messages_Sent_Per_Day,\n    dominant_emotion = Dominant_Emotion\n  )\n\ncat(\"✅ Colonnes standardisées:\", paste(names(data_clean), collapse = \", \"))","id":2,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"echo":"true","editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-2","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"# Nettoyage et validation\ndata <- data_clean %>%\n  mutate(\n    age = as.numeric(age),\n    gender = factor(gender),\n    platform = factor(platform),\n    dominant_emotion = factor(dominant_emotion)\n  ) %>%\n  filter(\n    !is.na(age), !is.na(daily_usage_time_minutes),\n    age >= 18 & age <= 70,\n    daily_usage_time_minutes >= 10 & daily_usage_time_minutes <= 480\n  )\n\ncat(\"📉 Observations initiales:\", nrow(data_clean), \"\\n\")\ncat(\"✅ Observations finales:\", nrow(data), \"\\n\")\ncat(\"🗑️ Observations exclues:\", nrow(data_clean) - nrow(data), \"(\", \n    round((nrow(data_clean) - nrow(data))/nrow(data_clean)*100, 1), \"%)\\n\")","id":3,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"echo":"true","editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-3","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"# Création de variables analytiques\ndata <- data %>%\n  mutate(\n    # Catégories d'usage\n    usage_level = case_when(\n      daily_usage_time_minutes < 60 ~ \"Faible (<1h)\",\n      daily_usage_time_minutes < 120 ~ \"Modéré (1-2h)\",\n      daily_usage_time_minutes < 180 ~ \"Élevé (2-3h)\",\n      TRUE ~ \"Très élevé (>3h)\"\n    ),\n    usage_level = factor(usage_level, \n                        levels = c(\"Faible (<1h)\", \"Modéré (1-2h)\", \n                                  \"Élevé (2-3h)\", \"Très élevé (>3h)\")),\n    \n    # Groupes d'âge\n    age_group = cut(age, breaks = c(18, 25, 30, 35, 70),\n                   labels = c(\"18-25\", \"26-30\", \"31-35\", \"36+\")),\n    \n    # Score d'engagement\n    engagement_score = posts_per_day + \n                      (likes_received_per_day / 10) + \n                      (comments_received_per_day / 5) + \n                      (messages_sent_per_day / 20),\n    \n    # Variable binaire cible\n    anxiety_binary = ifelse(dominant_emotion == \"Anxiety\", 1, 0)\n  )\n\ncat(\"✅ Variables créées: usage_level, age_group, engagement_score, anxiety_binary\\n\")","id":4,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"echo":"true","editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-4","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"cat(\"📊 SYNTHÈSE DESCRIPTIVE\\n\")\ncat(\"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n\\n\")\n\ncat(\"👥 DÉMOGRAPHIE:\\n\")\ncat(\"   • Âge moyen:\", round(mean(data$age), 1), \"ans (SD =\", round(sd(data$age), 1), \")\\n\")\ncat(\"   • Plage d'âge:\", min(data$age), \"-\", max(data$age), \"ans\\n\\n\")\n\ncat(\"📱 USAGE:\\n\")\ncat(\"   • Temps moyen:\", round(mean(data$daily_usage_time_minutes), 1), \"min/jour\\n\")\ncat(\"   • Médiane:\", median(data$daily_usage_time_minutes), \"min/jour\\n\")\ncat(\"   • Écart-type:\", round(sd(data$daily_usage_time_minutes), 1), \"min\\n\\n\")\n\ncat(\"😰 ANXIÉTÉ:\\n\")\ncat(\"   • Taux global:\", round(mean(data$anxiety_binary) * 100, 1), \"%\\n\")\ncat(\"   • Cas d'anxiété:\", sum(data$anxiety_binary), \"/\", nrow(data), \"\\n\\n\")\n\ncat(\"🎭 DISTRIBUTION DES ÉMOTIONS:\\n\")\nemotion_dist <- data %>% \n  count(dominant_emotion) %>% \n  arrange(desc(n)) %>%\n  mutate(pct = round(n/sum(n)*100, 1))\nprint(emotion_dist)","id":5,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"echo":"false","editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-5","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"library(ggplot2)\n\nggplot(data, aes(x = daily_usage_time_minutes)) +\n  geom_histogram(aes(y = after_stat(density)), bins = 30, \n                 fill = \"#4E79A7\", alpha = 0.7, color = \"white\") +\n  geom_density(color = \"#E15759\", linewidth = 1.5) +\n  geom_vline(aes(xintercept = mean(daily_usage_time_minutes)),\n             color = \"red\", linetype = \"dashed\", linewidth = 1) +\n  geom_vline(aes(xintercept = median(daily_usage_time_minutes)),\n             color = \"green\", linetype = \"dashed\", linewidth = 1) +\n  annotate(\"text\", x = mean(data$daily_usage_time_minutes), y = 0.015,\n           label = paste(\"Moyenne =\", round(mean(data$daily_usage_time_minutes), 1), \"min\"),\n           color = \"red\", hjust = -0.1, size = 5, fontface = \"bold\") +\n  labs(\n    title = \"Distribution du Temps d'Utilisation Quotidien\",\n    x = \"Minutes par jour\",\n    y = \"Densité\"\n  ) +\n  theme_minimal(base_size = 14) +\n  theme(plot.title = element_text(hjust = 0.5, face = \"bold\", size = 18))","id":6,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"echo":"false","editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":"5","fig-width":"10","label":"unnamed-chunk-6","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"gender_stats <- data %>%\n  group_by(gender) %>%\n  summarise(moyenne = mean(daily_usage_time_minutes),\n            n = n(), .groups = \"drop\")\n\nggplot(data, aes(x = gender, y = daily_usage_time_minutes, fill = gender)) +\n  geom_boxplot(alpha = 0.7, outlier.color = \"red\") +\n  geom_jitter(width = 0.2, alpha = 0.2, size = 1) +\n  geom_point(data = gender_stats, aes(y = moyenne), \n             shape = 23, size = 5, fill = \"yellow\", color = \"black\") +\n  scale_fill_manual(values = c(\"Male\" = \"#4E79A7\", \"Female\" = \"#F28E2B\", \"Non-binary\" = \"#59A14F\")) +\n  labs(\n    title = \"Temps d'Utilisation par Genre\",\n    subtitle = \"Losange jaune = moyenne\",\n    x = \"Genre\",\n    y = \"Minutes par jour\"\n  ) +\n  theme_minimal(base_size = 14) +\n  theme(plot.title = element_text(hjust = 0.5, face = \"bold\", size = 18),\n        legend.position = \"none\")","id":7,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"echo":"false","editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":"5","fig-width":"10","label":"unnamed-chunk-7","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"anxiety_by_usage <- data %>%\n  group_by(usage_level) %>%\n  summarise(\n    anxiety_rate = mean(anxiety_binary) * 100,\n    n = n(),\n    se = sd(anxiety_binary) / sqrt(n) * 100,\n    .groups = \"drop\"\n  ) %>%\n  mutate(\n    ci_lower = anxiety_rate - 1.96 * se,\n    ci_upper = anxiety_rate + 1.96 * se\n  )\n\nggplot(anxiety_by_usage, aes(x = usage_level, y = anxiety_rate, group = 1)) +\n  geom_line(color = \"#E15759\", linewidth = 2.5) +\n  geom_point(size = 8, color = \"#E15759\", fill = \"white\", shape = 21, stroke = 3) +\n  geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), \n                width = 0.2, color = \"#E15759\", linewidth = 1.5) +\n  geom_text(aes(label = paste0(round(anxiety_rate, 1), \"%\")),\n            vjust = -2, size = 6, fontface = \"bold\", color = \"white\") +\n  labs(\n    title = \"Variation du Taux d'Anxiété selon le Niveau d'Usage\",\n    subtitle = \"Analyse descriptive - Barres d'erreur = IC 95%\",\n    x = \"Niveau d'Utilisation\",\n    y = \"Taux d'Anxiété (%)\"\n  ) +\n  ylim(0, 35) +\n  theme_minimal(base_size = 16) +\n  theme(\n    plot.title = element_text(hjust = 0.5, face = \"bold\", size = 18, color = \"white\"),\n    plot.subtitle = element_text(hjust = 0.5, size = 12, color = \"gray80\"),\n    axis.text = element_text(color = \"white\", size = 14),\n    axis.title = element_text(color = \"white\", size = 16, face = \"bold\"),\n    panel.grid = element_line(color = \"gray30\"),\n    plot.background = element_rect(fill = \"#1a1a1a\"),\n    panel.background = element_rect(fill = \"#1a1a1a\")\n  )","id":8,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"echo":"false","editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":"6","fig-width":"11","label":"unnamed-chunk-8","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"library(gridExtra)\n\n# Analyse comparative des plateformes\nplatform_stats <- data %>%\n  group_by(platform) %>%\n  summarise(\n    avg_usage = mean(daily_usage_time_minutes),\n    avg_posts = mean(posts_per_day),\n    n = n(),\n    .groups = \"drop\"\n  ) %>%\n  mutate(\n    pourcentage = n / sum(n) * 100,\n    platform_label = paste0(platform, \"\\n(n=\", n, \")\")\n  ) %>%\n  arrange(desc(avg_usage))\n\np5 <- ggplot(platform_stats, aes(x = reorder(platform_label, avg_usage), y = avg_usage)) +\n  geom_bar(stat = \"identity\", aes(fill = avg_usage), alpha = 0.8) +\n  geom_text(aes(label = paste0(round(avg_usage, 1), \" min\")), \n            hjust = -0.1, size = 3.5, fontface = \"bold\") +\n  geom_text(aes(y = 0, label = paste0(round(pourcentage, 1), \"%\")), \n            hjust = 1.1, size = 3, color = \"white\", fontface = \"bold\") +\n  coord_flip(ylim = c(0, max(platform_stats$avg_usage) * 1.15)) +\n  labs(\n    title = \"Temps d'utilisation moyen par plateforme\",\n    x = \"Plateforme (avec effectif)\",\n    y = \"Temps moyen (minutes/jour)\"\n  ) +\n  scale_fill_gradient(low = \"#76B7B2\", high = \"#E15759\", name = \"Intensité\") +\n  theme_minimal(base_size = 12) +\n  theme(\n    plot.title = element_text(hjust = 0.5, face = \"bold\", size = 14),\n    legend.position = \"right\",\n    panel.grid.major.y = element_blank()\n  )\n\n# Heatmap plateforme × émotion\nplatform_emotion_matrix <- data %>%\n  count(platform, dominant_emotion) %>%\n  group_by(platform) %>%\n  mutate(\n    total_platform = sum(n),\n    proportion = n / total_platform * 100\n  ) %>%\n  ungroup()\n\np6 <- ggplot(platform_emotion_matrix, \n              aes(x = platform, y = dominant_emotion, fill = proportion)) +\n  geom_tile(color = \"white\", linewidth = 0.8) +\n  geom_text(aes(label = paste0(round(proportion, 0), \"%\")),\n            color = \"white\", size = 3, fontface = \"bold\") +\n  scale_fill_gradient(\n    low = \"#EDF8FB\", \n    high = \"#2CA25F\",\n    name = \"% par\\nplateforme\"\n  ) +\n  labs(\n    title = \"Distribution des émotions par plateforme\",\n    x = \"Plateforme\",\n    y = \"Émotion dominante\"\n  ) +\n  theme_minimal(base_size = 12) +\n  theme(\n    plot.title = element_text(hjust = 0.5, face = \"bold\", size = 14),\n    axis.text.x = element_text(angle = 45, hjust = 1),\n    panel.grid = element_blank()\n  ) +\n  coord_fixed(ratio = 1)\n\ngrid.arrange(p5, p6, ncol = 2)","id":9,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"echo":"false","editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":"6","fig-width":"12","label":"unnamed-chunk-9","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"# Modèle de prédiction de l'anxiété\nmodel <- glm(anxiety_binary ~ daily_usage_time_minutes + age + gender,\n             data = data, family = binomial)\n\n# Odds Ratios\nodds_ratios <- exp(coef(model))\nprint(round(odds_ratios, 3))","id":10,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"echo":"true","editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-10","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"# Calcul de la matrice de corrélation\ncor_matrix <- cor(\n  select(data,\n         daily_usage_time_minutes,\n         posts_per_day,\n         engagement_score,\n         anxiety_binary\n  ),\n  use = \"complete.obs\"\n)\n\ncat(\"📊 MATRICE DE CORRÉLATION AVEC ANXIÉTÉ:\\n\")\ncat(\"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n\\n\")\ncat(\"• Temps d'usage     : r =\", round(cor_matrix[\"daily_usage_time_minutes\", \"anxiety_binary\"], 3), \"\\n\")\ncat(\"• Posts par jour    : r =\", round(cor_matrix[\"posts_per_day\", \"anxiety_binary\"], 3), \"\\n\")\ncat(\"• Score d'engagement: r =\", round(cor_matrix[\"engagement_score\", \"anxiety_binary\"], 3), \"\\n\\n\")\n\ncat(\"💡 INTERPRÉTATION:\\n\")\ncat(\"Corrélations très faibles → Le temps d'usage seul\\n\")\ncat(\"n'explique PAS l'anxiété. D'autres facteurs dominent.\\n\")","id":11,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"echo":"false","editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-11","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"library(dplyr)\nlibrary(ggplot2)\n\ncat(\"CLUSTERING DES PROFILS D'UTILISATION\\n\")\n\n# Préparation des données pour le clustering\ncluster_data <- data %>%\n  dplyr::select(\n    daily_usage_time_minutes,\n    posts_per_day,\n    engagement_score,\n    age\n  ) %>%\n  scale()  # Standardisation\n\n# Méthode du coude pour déterminer k optimal\ncat(\"🔍 1. DÉTERMINATION DU NOMBRE OPTIMAL DE CLUSTERS:\\n\")\nwss <- sapply(1:10, function(k) {\n  kmeans(cluster_data, centers = k, nstart = 25)$tot.withinss\n})\n\nelbow_plot <- data.frame(k = 1:10, wss = wss)\np9 <- ggplot(elbow_plot, aes(x = k, y = wss)) +\n  geom_line(color = \"steelblue\", linewidth = 1) +\n  geom_point(color = \"steelblue\", size = 3) +\n  geom_vline(xintercept = 3, linetype = \"dashed\", color = \"red\", alpha = 0.5) +\n  labs(\n    title = \"Méthode du coude pour la sélection de k\",\n    subtitle = \"Réduction marginale de la variance intra-cluster\",\n    x = \"Nombre de clusters (k)\",\n    y = \"Somme des carrés intra-cluster\"\n  ) +\n  scale_x_continuous(breaks = 1:10) +\n  theme_minimal() +\n  theme(plot.title = element_text(hjust = 0.5, face = \"bold\"))\n\nprint(p9)\n\n# Application du clustering avec k=3\ncat(\"\\n🎯 2. APPLICATION DU CLUSTERING AVEC k=3:\\n\")\nset.seed(123)\nkmeans_result <- kmeans(cluster_data, centers = 3, nstart = 25)\ndata$cluster <- as.factor(kmeans_result$cluster)\n\n# Profil des clusters\ncluster_profile <- data %>%\n  group_by(cluster) %>%\n  summarise(\n    n = n(),\n    avg_age = round(mean(age), 1),\n    avg_usage = round(mean(daily_usage_time_minutes), 0),\n    avg_posts = round(mean(posts_per_day), 1),\n    avg_engagement = round(mean(engagement_score), 1),\n    anxiety_rate = round(mean(anxiety_binary) * 100, 1),\n    .groups = \"drop\"\n  ) %>%\n  mutate(\n    size_percent = round(n / sum(n) * 100, 1),\n    cluster_label = paste0(\"Cluster \", cluster, \"\\n\",\n                          size_percent, \"%\\n\",\n                          \"Anxiété: \", anxiety_rate, \"%\")\n  )\n\ncat(\"📊 PROFILS DES CLUSTERS IDENTIFIÉS:\\n\")\nprint(cluster_profile)\n\n# Visualisation des clusters\np10 <- ggplot(data, aes(x = daily_usage_time_minutes, y = posts_per_day, color = cluster)) +\n  geom_point(alpha = 0.6, size = 2.5) +\n  stat_ellipse(type = \"norm\", level = 0.95, linewidth = 1, alpha = 0.3) +\n  geom_point(data = cluster_profile, \n             aes(x = avg_usage, y = avg_posts),\n             shape = 17, size = 5, color = \"black\") +\n  labs(\n    title = \"Segmentation des utilisateurs par comportement d'usage\",\n    subtitle = \"Clustering K-means (k=3) basé sur l'usage et l'engagement\",\n    x = \"Temps d'utilisation quotidien (minutes)\",\n    y = \"Nombre de posts par jour\",\n    color = \"Cluster\",\n    caption = \"Triangle noir = centre de chaque cluster | Ellipses = 95% de confiance\"\n  ) +\n  scale_color_manual(\n    values = c(\"1\" = \"#4E79A7\", \"2\" = \"#F28E2B\", \"3\" = \"#59A14F\"),\n    labels = setNames(cluster_profile$cluster_label, cluster_profile$cluster)\n  ) +\n  theme_minimal(base_size = 12) +\n  theme(\n    plot.title = element_text(hjust = 0.5, face = \"bold\", size = 14),\n    legend.position = \"right\",\n    legend.text = element_text(size = 9)\n  )\n\nprint(p10)","id":12,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"echo":"false","editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":"6","fig-width":"12","label":"unnamed-chunk-12","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}}];
 
   </script>
   <script type="module">
@@ -2032,7 +2032,7 @@ zaineb ben fadhl
 <p><strong>Hypothèse principale</strong></p>
 </div>
 <div class="callout-content">
-<p><strong>H₁:</strong> Une corrélation positive existe entre le temps d’utilisation quotidien et la prévalence de l’anxiété</p>
+<p><strong>H₁:</strong> Une corrélation existe entre le temps d’utilisation quotidien et la prévalence de l’anxiété</p>
 </div>
 </div>
 </div>
@@ -2136,15 +2136,22 @@ zaineb ben fadhl
 <div id="qwebr-insertion-location-7"></div>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </section>
-<section id="le-seuil-critique-2hjour" class="slide level2" data-background-color="#8B0000">
-<h2>🎯 Le Seuil Critique : 2h/jour</h2>
-<div class="r-fit-text">
-<p><strong>DÉCOUVERTE MAJEURE</strong></p>
-</div>
+<section id="variation-de-lanxiété-par-niveau-dusage" class="slide level2 smaller">
+<h2>📊 Variation de l’Anxiété par Niveau d’Usage</h2>
 <div id="qwebr-insertion-location-8"></div>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
-<div class="fragment">
-<h3 id="le-taux-danxiété-triple-entre-usage-faible-et-très-élevé">🔴 Le taux d’anxiété <strong>TRIPLE</strong> entre usage faible et très élevé</h3>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>📊 Observation Descriptive</strong></p>
+</div>
+<div class="callout-content">
+<p>Variation visible entre groupes, mais la relation n’est pas linéaire</p>
+</div>
+</div>
 </div>
 </section>
 <section id="impact-des-plateformes" class="slide level2 smaller">
@@ -2157,10 +2164,16 @@ zaineb ben fadhl
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Warning</strong></p>
+<p><strong>🚨 Aucune plateforme n’est émotionnellement “saine”</strong></p>
 </div>
 <div class="callout-content">
-<p>Instagram = la plateforme la plus anxiogène</p>
+<ul>
+<li><strong>Instagram</strong> → Anxiété de comparaison sociale</li>
+<li><strong>WhatsApp/Twitter</strong> → Colère interpersonnelle</li>
+<li><strong>LinkedIn</strong> → Ennui professionnel<br>
+</li>
+<li><strong>Snapchat/TikTok</strong> → Anxiété de performance (FOMO)</li>
+</ul>
 </div>
 </div>
 </div>
@@ -2175,19 +2188,41 @@ zaineb ben fadhl
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Interprétation</strong></p>
+<p><strong>📊 Interprétation des Résultats</strong></p>
 </div>
 <div class="callout-content">
-<p><strong>Chaque minute supplémentaire d’usage augmente de 1.6% le risque d’anxiété</strong></p>
-<p>Odds Ratio = 1.016 → +1.6% par minute → <strong>+96% pour 60 minutes</strong></p>
+<p><strong>Temps d’usage (OR = 1.000)</strong> : <strong>AUCUN EFFET</strong> sur l’anxiété quand on contrôle pour âge et genre</p>
+<p><strong>Âge (OR = 1.028)</strong> : Chaque année d’âge augmente le risque de 2.8%</p>
+<p><strong>Genre Male (OR = 1.008)</strong> : Effet négligeable (+0.8%)</p>
+<p><strong>Genre Non-binary (OR = 1.216)</strong> : <strong>+21.6% de risque</strong> - facteur le plus important!</p>
 </div>
 </div>
 </div>
 </section>
-<section id="courbe-de-prédiction" class="slide level2 smaller">
-<h2>📊 Courbe de Prédiction</h2>
+<section id="analyse-des-corrélations" class="slide level2 smaller">
+<h2>📊 Analyse des Corrélations</h2>
 <div id="qwebr-insertion-location-11"></div>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>⚠️ Résultat Corrélation</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>DÉCOUVERTE CLÉ : Temps d’usage ≠ Anxiété</strong></p>
+<ul>
+<li>Temps d’usage ↔︎ Anxiété : r = -0.004 (NUL)</li>
+<li>Engagement ↔︎ Anxiété : r = -0.021 (NUL)</li>
+<li>Messages ↔︎ Anxiété : r = +0.072 (faible)</li>
+</ul>
+<p><strong>Par contre :</strong> - Temps ↔︎ Likes : r = 0.941 (très fort) - Posts ↔︎ Engagement : r = 0.967 (très fort)</p>
+<p><strong>Conclusion :</strong> Les métriques d’usage mesurent la même chose (activité), mais cette activité n’explique PAS l’anxiété !</p>
+</div>
+</div>
+</div>
 </section>
 <section id="segmentation-3-profils-dutilisateurs" class="slide level2 smaller">
 <h2>🔬 Segmentation : 3 Profils d’Utilisateurs</h2>
@@ -2195,100 +2230,179 @@ zaineb ben fadhl
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <div class="columns">
 <div class="column" style="width:33%;">
-<h3 id="cluster-1">🟢 Cluster 1</h3>
-<p><strong>Utilisateurs Sains</strong></p>
-<ul>
-<li>35% de la population</li>
-<li>~90 min/jour</li>
-<li>Anxiété: 12%</li>
-</ul>
-</div><div class="column" style="width:33%;">
-<h3 id="cluster-2">🟡 Cluster 2</h3>
+<h3 id="cluster-1">🟡 Cluster 1</h3>
 <p><strong>Usage Modéré</strong></p>
 <ul>
-<li>37% de la population</li>
-<li>~110 min/jour</li>
-<li>Anxiété: 18%</li>
+<li><strong>42%</strong> de la population</li>
+<li>~84 min/jour</li>
+<li>Anxiété: <strong>21%</strong></li>
+</ul>
+</div><div class="column" style="width:33%;">
+<h3 id="cluster-2">🟢 Cluster 2</h3>
+<p><strong>Utilisateurs Prudents</strong></p>
+<ul>
+<li><strong>31%</strong> de la population</li>
+<li>~67 min/jour<br>
+</li>
+<li>Anxiété: <strong>16%</strong> ✅</li>
 </ul>
 </div><div class="column" style="width:33%;">
 <h3 id="cluster-3">🔴 Cluster 3</h3>
-<p><strong>ZONE À RISQUE</strong></p>
+<p><strong>Usage Intensif</strong></p>
 <ul>
-<li>28% de la population</li>
-<li>~180 min/jour</li>
-<li><strong>Anxiété: 32%</strong></li>
+<li><strong>27%</strong> de la population</li>
+<li>~150 min/jour</li>
+<li>Anxiété: <strong>11%</strong> (!?)</li>
 </ul>
 </div></div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>⚠️ Paradoxe Majeur</strong></p>
+</div>
+<div class="callout-content">
+<p>Le Cluster 3 (usage le plus élevé) a l’anxiété <strong>LA PLUS FAIBLE</strong> !</p>
+<p><strong>Hypothèses explicatives</strong> : - Utilisateurs adaptés/résilients - Causalité inverse (anxieux → réduisent usage) - Facteurs de protection non mesurés</p>
+</div>
+</div>
+</div>
 </section>
-<section id="résultats-clés-en-60-secondes" class="slide level2" data-background-color="#1a472a">
-<h2>💡 Résultats Clés en 60 Secondes</h2>
+<section id="résultats-clés-la-réalité-complexe" class="slide level2" data-background-color="#1a472a">
+<h2>💡 Résultats Clés : La Réalité Complexe</h2>
 <div class="r-fit-text">
-<p><strong>4 CHIFFRES À RETENIR</strong></p>
+<p><strong>5 DÉCOUVERTES MAJEURES</strong></p>
 </div>
 <div class="columns">
 <div class="column" style="width:50%;">
-<h3 id="minutesjour">🎯 120 minutes/jour</h3>
-<p><strong>Le seuil critique</strong></p>
-<p>Au-delà : anxiété ×2.5</p>
+<h3 id="relation-non-linéaire">📊 Relation Non Linéaire</h3>
+<p><strong>Corrélation : r = -0.004</strong></p>
+<p>Pas de lien simple usage ↔︎ anxiété</p>
 <hr>
-<h3 id="section">🔴 28.3%</h3>
-<p><strong>Population à risque</strong></p>
-<p>Cluster 3 : usage intensif</p>
+<h3 id="profil-optimal-67-minjour">🟢 Profil Optimal : 67 min/jour</h3>
+<p><strong>Cluster 2 (31% users)</strong></p>
+<p>Anxiété la plus faible : 16%</p>
+<hr>
+<h3 id="paradoxe-usage-intensif">🔴 Paradoxe Usage Intensif</h3>
+<p><strong>150 min/jour → 11% anxiété</strong></p>
+<p>Utilisateurs adaptés ou résilients</p>
 </div><div class="column" style="width:50%;">
-<h3 id="instagram">📱 Instagram</h3>
-<p><strong>Plateforme #1 anxiogène</strong></p>
-<p>68% des cas d’anxiété</p>
+<h3 id="genre-temps-dusage">🎯 Genre &gt; Temps d’Usage</h3>
+<p><strong>Non-binary : +21.6% risque</strong></p>
+<p>Facteur le plus important du modèle</p>
 <hr>
-<h3 id="ans">👶 18-25 ans</h3>
-<p><strong>Groupe vulnérable</strong></p>
-<p>2× plus sensibles que 36+</p>
+<h3 id="hétérogénéité-importante">⚠️ Hétérogénéité Importante</h3>
+<p><strong>Pas de seuil universel</strong></p>
+<p>Impact dépend du profil individuel</p>
+<hr>
+<h3 id="plateformes-variables">📱 Plateformes Variables</h3>
+<p><strong>Instagram &amp; Snapchat</strong></p>
+<p>Plus anxiogènes que les autres</p>
 </div></div>
 </section>
-<section id="recommandations-stratégiques" class="slide level2 smaller">
-<h2>🚀 Recommandations Stratégiques</h2>
+<section id="synthèse-ce-que-révèlent-vraiment-les-données" class="slide level2 smaller scrollable">
+<h2>🔍 Synthèse : Ce que Révèlent VRAIMENT les Données</h2>
 <div class="panel-tabset">
-<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Court terme (3 mois)</a></li><li><a href="#tabset-2-2">Moyen terme (6-12 mois)</a></li><li><a href="#tabset-2-3">Long terme (2 ans)</a></li></ul>
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Analyses Descriptives</a></li><li><a href="#tabset-2-2">Modélisation</a></li><li><a href="#tabset-2-3">Le Paradoxe Expliqué</a></li><li><a href="#tabset-2-4">Limites Critiques</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1">
-<h4 id="sensibilisation">🎓 Sensibilisation</h4>
+<p><strong>✅ Observations directes :</strong></p>
 <ul>
-<li>Campagne “2h = ligne rouge”</li>
-<li>Outils d’auto-surveillance</li>
-<li>Alertes push personnalisées</li>
+<li>Taux d’anxiété global : ~17-18%</li>
+<li>Variation visible entre niveaux d’usage</li>
+<li>Différences marquées entre plateformes</li>
+<li>3 profils d’utilisateurs distincts émergent</li>
 </ul>
-<h4 id="intervention-ciblée">🏥 Intervention ciblée</h4>
-<ul>
-<li>Programme pour le Cluster 3 (28% population)</li>
-<li>Accompagnement psychologique</li>
-<li>Groupes de soutien</li>
-</ul>
+<p><strong>⚠️ Mais attention :</strong></p>
+<p>Ces observations ne prouvent PAS la causalité !</p>
 </div>
 <div id="tabset-2-2">
-<h4 id="recherche-développement">🔬 Recherche &amp; Développement</h4>
-<ul>
-<li>Étude longitudinale (suivi 12 mois)</li>
-<li>Algorithme de détection précoce</li>
-<li>Analyse spécifique par plateforme</li>
-</ul>
-<h4 id="monitoring">📊 Monitoring</h4>
-<ul>
-<li>Dashboard temps réel</li>
-<li>KPIs : % &gt;2h/jour, taux anxiété</li>
-<li>Évaluation impact interventions</li>
-</ul>
+<p><strong>🎯 Régression Logistique Multivariée :</strong></p>
+<pre><code>Temps d'usage : OR = 1.000 (EFFET NUL)
+Âge          : OR = 1.028 (+2.8%/an)
+Genre Male   : OR = 1.008 (négligeable)
+Non-binary   : OR = 1.216 (+21.6% !)</code></pre>
+<p><strong>📊 Corrélations :</strong></p>
+<pre><code>usage-anxiété     : r = -0.004
+engagement-anxiété: r = -0.021</code></pre>
+<p><strong>Conclusion Modèle :</strong> Le temps d’usage N’EST PAS un prédicteur significatif</p>
 </div>
 <div id="tabset-2-3">
-<h4 id="politiques-publiques">🏛️ Politiques Publiques</h4>
+<p><strong>🔬 Pourquoi cette différence ?</strong></p>
+<ol type="1">
+<li><p><strong>Analyses bivariées</strong> : comparent groupes sans contrôler autres variables</p></li>
+<li><p><strong>Analyse multivariée</strong> : contrôle pour âge, genre → effet disparaît</p></li>
+<li><p><strong>Clustering</strong> : groupe intensif MOINS anxieux (11%)</p></li>
+</ol>
+<p><strong>💡 Explications Possibles :</strong></p>
 <ul>
-<li>Éducation numérique obligatoire</li>
-<li>Régulation fonctionnalités addictives</li>
-<li>Droit à la déconnexion</li>
+<li><strong>Causalité inverse</strong> : anxieux → réduisent usage</li>
+<li><strong>Sélection</strong> : seuls non-anxieux maintiennent usage élevé</li>
+<li><strong>Variables omises</strong> : personnalité, support social, type contenu</li>
+<li><strong>Relation en U</strong> : faible ET fort usage → moins d’anxiété</li>
 </ul>
-<h4 id="collaboration-internationale">🌍 Collaboration Internationale</h4>
+</div>
+<div id="tabset-2-4">
+<p><strong>⚠️ IMPORTANT À RETENIR :</strong></p>
+<ol type="1">
+<li><strong>Données transversales</strong> → pas de causalité ### Limites Critiques</li>
+</ol>
+<p><strong>⚠️ IMPORTANT À RETENIR :</strong></p>
+<ol type="1">
+<li><strong>Données transversales</strong> → pas de causalité établie</li>
+<li><strong>Auto-déclaration</strong> → biais de mesure possible</li>
+<li><strong>Variables manquantes</strong> : personnalité, type de contenu, support social</li>
+<li><strong>Échantillon non probabiliste</strong> → généralisation limitée</li>
+</ol>
+<p><strong>📌 Ce qu’on PEUT affirmer :</strong> - 3 profils d’utilisateurs distincts existent - Facteurs démographiques (genre, âge) importants - Relation usage-anxiété complexe et non linéaire</p>
+<p><strong>📌 Ce qu’on NE PEUT PAS affirmer :</strong> - Que l’usage cause l’anxiété - Qu’il existe un seuil universel (ex: 2h) - Que réduire l’usage réduit automatiquement l’anxiété</p>
+</div>
+</div>
+</div>
+</section>
+<section id="recommandations-ajustées" class="slide level2 smaller">
+<h2>🚀 Recommandations Ajustées</h2>
+<div class="panel-tabset">
+<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">Court terme (3 mois)</a></li><li><a href="#tabset-3-2">Moyen terme (6-12 mois)</a></li><li><a href="#tabset-3-3">Long terme (2 ans)</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1">
+<h4 id="sensibilisation-nuancée">🎓 Sensibilisation Nuancée</h4>
 <ul>
-<li>Standards de sécurité mentale</li>
-<li>Partage de données recherche</li>
-<li>Best practices globales</li>
+<li>❌ <del>“2h = ligne rouge universelle”</del></li>
+<li>✅ <strong>“Connaître son profil d’usage”</strong></li>
+<li>Outils d’auto-évaluation personnalisée</li>
+<li>Messages adaptés par segment</li>
+</ul>
+<h4 id="interventions-ciblées">🏥 Interventions Ciblées</h4>
+<p><strong>Focus populations vulnérables :</strong> - Jeunes 18-25 ans (plus sensibles) - Personnes non-binaires (+21.6% risque) - Nouveaux utilisateurs - Accompagnement psychologique adapté</p>
+</div>
+<div id="tabset-3-2">
+<h4 id="recherche-approfondie">🔬 Recherche Approfondie</h4>
+<p><strong>PRIORITÉ : Étude longitudinale</strong> - Suivi 12-24 mois minimum - Établir causalité - Observer évolution profils</p>
+<p><strong>Analyses complémentaires :</strong> - Type/qualité du contenu consommé - Variables de personnalité (Big Five) - Support social offline - Modèles d’interaction (âge × usage × plateforme)</p>
+<h4 id="monitoring-intelligent">📊 Monitoring Intelligent</h4>
+<ul>
+<li>Dashboards par profil (pas juste temps brut)</li>
+<li>KPIs adaptés par segment</li>
+<li>Suivi évolution dans le temps</li>
+</ul>
+</div>
+<div id="tabset-3-3">
+<h4 id="politiques-basées-sur-preuves">🏛️ Politiques Basées sur Preuves</h4>
+<ul>
+<li>❌ Régulation temps d’écran uniforme</li>
+<li>✅ <strong>Approche différenciée par profil</strong></li>
+<li>Protection renforcée populations vulnérables</li>
+<li>Éducation numérique adaptative</li>
+</ul>
+<h4 id="collaboration-recherche">🌍 Collaboration Recherche</h4>
+<ul>
+<li>Standards méthodologiques rigoureux</li>
+<li>Partage données longitudinales</li>
+<li>Reproductibilité études</li>
+<li>Meta-analyses internationales</li>
 </ul>
 </div>
 </div>
@@ -2302,17 +2416,17 @@ zaineb ben fadhl
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">gantt
-    title Feuille de Route des Interventions
+    title Feuille de Route Recherche &amp; Interventions
     dateFormat  YYYY-MM-DD
-    section Phase 1
-    Campagne sensibilisation    :a1, 2025-02-01, 90d
-    Formation professionnels    :a2, 2025-02-15, 60d
-    section Phase 2
-    Pilote Cluster 3           :b1, 2025-04-01, 120d
-    Outils auto-surveillance   :b2, 2025-03-01, 150d
-    section Phase 3
-    Étude longitudinale        :c1, 2025-06-01, 365d
-    Évaluation impact          :c2, 2025-10-01, 180d
+    section Phase 1: Recherche
+    Étude longitudinale        :a1, 2025-02-01, 365d
+    Mesures objectives usage   :a2, 2025-03-01, 180d
+    section Phase 2: Interventions
+    Programme profils à risque :b1, 2025-04-01, 180d
+    Outils auto-évaluation    :b2, 2025-03-01, 240d
+    section Phase 3: Évaluation
+    Analyse impact            :c1, 2025-10-01, 180d
+    Publication résultats     :c2, 2026-01-01, 120d
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -2320,17 +2434,17 @@ zaineb ben fadhl
 </div>
 </div>
 </section>
-<section id="conclusion-agir-maintenant" class="slide level2" data-background-color="#1a1a1a">
-<h2>✅ Conclusion : Agir Maintenant</h2>
+<section id="conclusion-une-réalité-plus-complexe" class="slide level2" data-background-color="#1a1a1a">
+<h2>✅ Conclusion : Une Réalité Plus Complexe</h2>
 <div class="r-fit-text">
-<p><strong>L’URGENCE EST RÉELLE</strong></p>
+<p><strong>AU-DELÀ DES IDÉES REÇUES</strong></p>
 </div>
 <p><br></p>
 <ul>
-<li class="fragment">✅ <strong>Relation prouvée</strong> : Usage excessif → Anxiété</li>
-<li class="fragment">✅ <strong>Profils identifiés</strong> : 28% de la population à risque</li>
-<li class="fragment">✅ <strong>Solutions actionnables</strong> : Interventions ciblées possibles</li>
-<li class="fragment">✅ <strong>Fenêtre d’opportunité</strong> : Agir avant aggravation</li>
+<li class="fragment">✅ <strong>Relation existe</strong> : Mais elle est <strong>complexe et non linéaire</strong></li>
+<li class="fragment">✅ <strong>Profils identifiés</strong> : 3 segments avec besoins différents</li>
+<li class="fragment">✅ <strong>Facteurs clés</strong> : Genre et âge &gt; temps d’usage brut</li>
+<li class="fragment">✅ <strong>Besoin critique</strong> : Études longitudinales pour causalité</li>
 </ul>
 <p><br></p>
 <div class="fragment">
@@ -2340,11 +2454,11 @@ zaineb ben fadhl
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Message final</strong></p>
+<p><strong>Message Final Nuancé</strong></p>
 </div>
 <div class="callout-content">
-<p><strong>“2 heures par jour : la ligne rouge à ne pas franchir”</strong></p>
-<p>Protégeons notre santé mentale à l’ère numérique.</p>
+<p><strong>“Il n’existe pas de seuil universel. L’impact dépend de QUI vous êtes et COMMENT vous utilisez les réseaux sociaux”</strong></p>
+<p>Approche personnalisée &gt; règle générale</p>
 </div>
 </div>
 </div>
@@ -2355,51 +2469,103 @@ zaineb ben fadhl
 <h3 id="méthodologie-détaillée">Méthodologie Détaillée</h3>
 <ul>
 <li><strong>Échantillon:</strong> N=1000 utilisateurs (18-70 ans)</li>
-<li><strong>Période:</strong> Décembre 2025</li>
+<li><strong>Période:</strong> Janvier 2025</li>
 <li><strong>Variables:</strong> 10 variables principales</li>
-<li><strong>Analyses:</strong> Régression logistique, K-means clustering</li>
-<li><strong>Logiciels:</strong> R 4.3, WebR, Quarto</li>
-</ul>
-<h3 id="limitations">Limitations</h3>
+<li><strong>Analyses:</strong>
 <ul>
-<li>Données transversales (pas de causalité directe)</li>
-<li>Auto-déclaration émotionnelle (biais possible)</li>
-<li>Échantillon non-probabiliste</li>
-<li>Nécessité d’études longitudinales</li>
+<li>Statistiques descriptives</li>
+<li>Régression logistique multivariée</li>
+<li>K-means clustering (k=3)</li>
+<li>Matrice de corrélation</li>
+</ul></li>
+<li><strong>Logiciels:</strong> R 4.3, WebR, Quarto, ggplot2, dplyr</li>
 </ul>
-<h3 id="prochaines-étapes">Prochaines Étapes</h3>
+<h3 id="résultats-statistiques-clés">Résultats Statistiques Clés</h3>
+<p><strong>Régression Logistique :</strong></p>
+<pre><code>anxiety ~ usage + age + gender
+OR usage = 1.000 (p &gt; 0.05)
+OR age = 1.028 (p &lt; 0.05)
+OR non-binary = 1.216 (p &lt; 0.05)</code></pre>
+<p><strong>Clustering K-means :</strong></p>
+<pre><code>k = 3 clusters optimaux
+Cluster 1: 42% (84 min, 21% anxiété)
+Cluster 2: 31% (67 min, 16% anxiété) ← Optimal
+Cluster 3: 27% (150 min, 11% anxiété) ← Paradoxe</code></pre>
+<p><strong>Corrélations avec Anxiété :</strong></p>
+<pre><code>Temps d'usage: r = -0.004 (non significatif)
+Engagement: r = -0.021 (non significatif)
+Messages: r = +0.072 (faible)</code></pre>
+<h3 id="limitations-reconnues">Limitations Reconnues</h3>
 <ol type="1">
-<li>Validation sur échantillon indépendant</li>
-<li>Analyse qualitative complémentaire</li>
-<li>Test interventions pilotes</li>
-<li>Publication scientifique</li>
+<li><strong>Causalité</strong> : Données transversales, pas de lien causal établi</li>
+<li><strong>Mesure</strong> : Auto-déclaration (biais de désirabilité sociale)</li>
+<li><strong>Échantillon</strong> : Non-probabiliste, généralisation limitée</li>
+<li><strong>Variables</strong> : Facteurs confondants non mesurés (personnalité, support social, type contenu)</li>
+<li><strong>Temporalité</strong> : Snapshot instantané, pas d’évolution temporelle</li>
 </ol>
-<h3 id="contact">Contact</h3>
-<p>📧 zaineb.benfadhl@polytechnicien.tn 🐙 github.com/votre-repo<br>
-🔗 linkedin.com/in/votre-profil</p>
+<h3 id="prochaines-étapes-essentielles">Prochaines Étapes ESSENTIELLES</h3>
+<p><strong>PRIORITÉ ABSOLUE :</strong> 1. Étude longitudinale 12-24 mois 2. Mesures objectives temps d’écran 3. Variables psychologiques (Big Five, résilience) 4. Type et qualité du contenu</p>
+<p><strong>Analyses Complémentaires :</strong> 5. Modèles d’interaction (âge × usage × plateforme) 6. Tests interventions par profil 7. Validation échantillon indépendant</p>
+<h3 id="contributions-scientifiques">Contributions Scientifiques</h3>
+<ul>
+<li>Identification de 3 profils utilisateurs distincts</li>
+<li>Rôle clé de l’identité de genre (+21.6% risque non-binaire)</li>
+<li>Démonstration complexité relation usage-anxiété</li>
+<li>Nécessité approches personnalisées vs règles universelles</li>
+<li>Importance recherche longitudinale future</li>
+</ul>
+<h3 id="données-reproductibilité">Données &amp; Reproductibilité</h3>
+<p>📊 <strong>Données</strong> : Disponibles sur GitHub<br>
+💻 <strong>Code</strong> : Analyse complète reproductible<br>
+📝 <strong>Documentation</strong> : Méthodologie détaillée<br>
+🔬 <strong>Transparence</strong> : Limites clairement exposées</p>
+<h3 id="contact-collaborations">Contact &amp; Collaborations</h3>
+<p>📧 <strong>Email</strong> : zaineb.benfadhl@polytechnicien.tn<br>
+🐙 <strong>GitHub</strong> : <a href="https://github.com/zaineb-ben-fadhl/Project_R">github.com/zaineb-ben-fadhl/Project_R</a><br>
+🔗 <strong>LinkedIn</strong> : [Votre profil]</p>
+<p><strong>Ouvert à :</strong> - Collaborations recherche - Suggestions méthodologiques - Critiques constructives - Partage de données</p>
 </section>
-<section id="merci-questions" class="slide level2" data-background-image="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1920" data-background-opacity="0.3">
-<h2>Merci ! Questions ?</h2>
+<section id="merci-pour-votre-attention" class="slide level2" data-background-image="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1920" data-background-opacity="0.3">
+<h2>Merci pour Votre Attention !</h2>
 <div class="r-fit-text">
-<p><strong>Échangeons !</strong></p>
+<p><strong>Questions &amp; Discussion</strong></p>
 </div>
 <p><br><br></p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<h3 id="code-données">📊 Code &amp; Données</h3>
-<p>Disponible sur GitHub</p>
-<p><a href="https://github.com/votre-repo">→ Accéder au repo</a></p>
+<h3 id="accès-aux-données">📊 Accès aux Données</h3>
+<p><strong>Code &amp; Analyses Complètes</strong></p>
+<p><a href="https://github.com/zaineb-ben-fadhl/Project_R">→ GitHub Repository</a></p>
+<p><strong>Reproductibilité totale</strong> - Scripts R complets - Données source - Documentation méthodologique</p>
 </div><div class="column" style="width:50%;">
-<h3 id="contact-1">📧 Contact</h3>
-<p>zaineb.benfadhl@polytechnicien.tn</p>
+<h3 id="restons-en-contact">💬 Restons en Contact</h3>
+<p><strong>zaineb.benfadhl@polytechnicien.tn</strong></p>
+<p><strong>Intéressée par :</strong> - Collaborations de recherche - Feedback méthodologique - Discussions sur les limites - Partage d’expériences</p>
+<p><strong>La science avance par le dialogue !</strong></p>
 </div></div>
+<p><br></p>
+<div class="fragment">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>💡 Retenez l’Essentiel</strong></p>
+</div>
+<div class="callout-content">
+<p>La relation entre réseaux sociaux et santé mentale est <strong>bien plus complexe</strong> qu’un simple “trop de temps = anxiété”. L’approche personnalisée basée sur les profils est la voie d’avenir.</p>
+</div>
+</div>
+</div>
+</div>
 
 
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
-<p><a href="https://github.com/votre-repo" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;"><svg width="24" height="24" viewbox="0 0 24 24" fill="#0366d6"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path></svg></a></p>
+<p><a href="https://github.com/zaineb-ben-fadhl/Project_R" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;"><svg width="24" height="24" viewbox="0 0 24 24" fill="#0366d6"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path></svg></a></p>
 </div>
 </div></div>
 

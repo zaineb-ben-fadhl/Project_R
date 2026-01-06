@@ -52,9 +52,9 @@ rsconnect/
 **/.ipynb_checkpoints/
 
 # Quarto output files (générés automatiquement)
-/docs/
-!docs/.nojekyll  # On garde .nojekyll
-!docs/CNAME      # On garde CNAME si présent
+
+
+
 
 # Quarto temporary files
 *.quarto.*

@@ -13,7 +13,7 @@ format:
     slide-number: true
     transition: slide
     background-transition: fade
-    footer: '<a href="https://github.com/votre-repo" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;"><svg width="24" height="24" viewBox="0 0 24 24" fill="#0366d6"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>'
+    footer: '<a href="https://github.com/zaineb-ben-fadhl/Project_R" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;"><svg width="24" height="24" viewBox="0 0 24 24" fill="#0366d6"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>'
 webr:
   packages: ['dplyr', 'ggplot2', 'gridExtra',"readr","janitor"]
   show-startup-message: false
@@ -59,7 +59,7 @@ filters:
 ::: {.fragment}
 ::: {.callout-note}
 ## Hypothèse principale
-**H₁:** Une corrélation positive existe entre le temps d'utilisation quotidien et la prévalence de l'anxiété
+**H₁:** Une corrélation existe entre le temps d'utilisation quotidien et la prévalence de l'anxiété
 :::
 :::
 
@@ -102,13 +102,10 @@ data_raw <- suppressWarnings(
   )
 )
 
-
-
 glimpse(data_raw)
 cat("   - Nombre de lignes :", nrow(data_raw), "\n")
 cat("   - Nombre de colonnes :", ncol(data_raw), "\n")
 print(summary(data_raw))
-
 ```
 
 ::: {.callout-tip}
@@ -325,11 +322,7 @@ ggplot(data, aes(x = gender, y = daily_usage_time_minutes, fill = gender)) +
 
 ---
 
-## 🎯 Le Seuil Critique : 2h/jour {background-color="#8B0000"}
-
-::: {.r-fit-text}
-**DÉCOUVERTE MAJEURE**
-:::
+## 📊 Variation de l'Anxiété par Niveau d'Usage {.smaller}
 
 ```{webr-r}
 #| echo: false
@@ -356,18 +349,17 @@ ggplot(anxiety_by_usage, aes(x = usage_level, y = anxiety_rate, group = 1)) +
                 width = 0.2, color = "#E15759", linewidth = 1.5) +
   geom_text(aes(label = paste0(round(anxiety_rate, 1), "%")),
             vjust = -2, size = 6, fontface = "bold", color = "white") +
-  geom_hline(yintercept = 20, linetype = "dashed", color = "yellow", linewidth = 1.5) +
-  annotate("text", x = 3, y = 22, label = "Seuil d'alerte : 20%", 
-           color = "yellow", size = 5, fontface = "bold") +
   labs(
-    title = "Le Taux d'Anxiété EXPLOSE après 2h/jour",
+    title = "Variation du Taux d'Anxiété selon le Niveau d'Usage",
+    subtitle = "Analyse descriptive - Barres d'erreur = IC 95%",
     x = "Niveau d'Utilisation",
     y = "Taux d'Anxiété (%)"
   ) +
-  ylim(0, 40) +
+  ylim(0, 35) +
   theme_minimal(base_size = 16) +
   theme(
-    plot.title = element_text(hjust = 0.5, face = "bold", size = 20, color = "white"),
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 18, color = "white"),
+    plot.subtitle = element_text(hjust = 0.5, size = 12, color = "gray80"),
     axis.text = element_text(color = "white", size = 14),
     axis.title = element_text(color = "white", size = 16, face = "bold"),
     panel.grid = element_line(color = "gray30"),
@@ -376,8 +368,9 @@ ggplot(anxiety_by_usage, aes(x = usage_level, y = anxiety_rate, group = 1)) +
   )
 ```
 
-::: {.fragment}
-### 🔴 Le taux d'anxiété **TRIPLE** entre usage faible et très élevé
+::: {.callout-note}
+## 📊 Observation Descriptive
+Variation visible entre groupes, mais la relation n'est pas linéaire
 :::
 
 ---
@@ -386,37 +379,89 @@ ggplot(anxiety_by_usage, aes(x = usage_level, y = anxiety_rate, group = 1)) +
 
 ```{webr-r}
 #| echo: false
-#| fig-width: 11
+#| fig-width: 12
 #| fig-height: 6
 
-platform_emotion <- data %>%
+library(gridExtra)
+
+# Analyse comparative des plateformes
+platform_stats <- data %>%
+  group_by(platform) %>%
+  summarise(
+    avg_usage = mean(daily_usage_time_minutes),
+    avg_posts = mean(posts_per_day),
+    n = n(),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    pourcentage = n / sum(n) * 100,
+    platform_label = paste0(platform, "\n(n=", n, ")")
+  ) %>%
+  arrange(desc(avg_usage))
+
+p5 <- ggplot(platform_stats, aes(x = reorder(platform_label, avg_usage), y = avg_usage)) +
+  geom_bar(stat = "identity", aes(fill = avg_usage), alpha = 0.8) +
+  geom_text(aes(label = paste0(round(avg_usage, 1), " min")), 
+            hjust = -0.1, size = 3.5, fontface = "bold") +
+  geom_text(aes(y = 0, label = paste0(round(pourcentage, 1), "%")), 
+            hjust = 1.1, size = 3, color = "white", fontface = "bold") +
+  coord_flip(ylim = c(0, max(platform_stats$avg_usage) * 1.15)) +
+  labs(
+    title = "Temps d'utilisation moyen par plateforme",
+    x = "Plateforme (avec effectif)",
+    y = "Temps moyen (minutes/jour)"
+  ) +
+  scale_fill_gradient(low = "#76B7B2", high = "#E15759", name = "Intensité") +
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 14),
+    legend.position = "right",
+    panel.grid.major.y = element_blank()
+  )
+
+# Heatmap plateforme × émotion
+platform_emotion_matrix <- data %>%
   count(platform, dominant_emotion) %>%
   group_by(platform) %>%
-  mutate(proportion = n / sum(n) * 100) %>%
+  mutate(
+    total_platform = sum(n),
+    proportion = n / total_platform * 100
+  ) %>%
   ungroup()
 
-ggplot(platform_emotion, aes(x = platform, y = dominant_emotion, fill = proportion)) +
-  geom_tile(color = "white", size = 1) +
+p6 <- ggplot(platform_emotion_matrix, 
+              aes(x = platform, y = dominant_emotion, fill = proportion)) +
+  geom_tile(color = "white", linewidth = 0.8) +
   geom_text(aes(label = paste0(round(proportion, 0), "%")),
-            color = "white", size = 5, fontface = "bold") +
-  scale_fill_gradient(low = "#FFF5E1", high = "#E15759",
-                     name = "% Utilisateurs") +
-  labs(
-    title = "Carte Émotionnelle des Plateformes Sociales",
-    x = "Plateforme",
-    y = "Émotion Dominante"
+            color = "white", size = 3, fontface = "bold") +
+  scale_fill_gradient(
+    low = "#EDF8FB", 
+    high = "#2CA25F",
+    name = "% par\nplateforme"
   ) +
-  theme_minimal(base_size = 14) +
+  labs(
+    title = "Distribution des émotions par plateforme",
+    x = "Plateforme",
+    y = "Émotion dominante"
+  ) +
+  theme_minimal(base_size = 12) +
   theme(
-    plot.title = element_text(hjust = 0.5, face = "bold", size = 18),
-    axis.text.x = element_text(angle = 45, hjust = 1, size = 12),
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 14),
+    axis.text.x = element_text(angle = 45, hjust = 1),
     panel.grid = element_blank()
   ) +
   coord_fixed(ratio = 1)
+
+grid.arrange(p5, p6, ncol = 2)
 ```
 
 ::: {.callout-warning}
-Instagram = la plateforme la plus anxiogène
+## 🚨 Aucune plateforme n'est émotionnellement "saine"
+
+- **Instagram** → Anxiété de comparaison sociale
+- **WhatsApp/Twitter** → Colère interpersonnelle
+- **LinkedIn** → Ennui professionnel  
+- **Snapchat/TikTok** → Anxiété de performance (FOMO)
 :::
 
 ---
@@ -435,49 +480,63 @@ print(round(odds_ratios, 3))
 ```
 
 ::: {.callout-important}
-## Interprétation
-**Chaque minute supplémentaire d'usage augmente de 1.6% le risque d'anxiété**
+## 📊 Interprétation des Résultats
 
-Odds Ratio = 1.016 → +1.6% par minute → **+96% pour 60 minutes**
+**Temps d'usage (OR = 1.000)** : **AUCUN EFFET** sur l'anxiété quand on contrôle pour âge et genre
+
+**Âge (OR = 1.028)** : Chaque année d'âge augmente le risque de 2.8%
+
+**Genre Male (OR = 1.008)** : Effet négligeable (+0.8%)
+
+**Genre Non-binary (OR = 1.216)** : **+21.6% de risque** - facteur le plus important!
 :::
 
 ---
 
-## 📊 Courbe de Prédiction {.smaller}
+## 📊 Analyse des Corrélations {.smaller}
 
 ```{webr-r}
 #| echo: false
-#| fig-width: 10
-#| fig-height: 5.5
 
-model <- glm(anxiety_binary ~ daily_usage_time_minutes, 
-             data = data, family = binomial)
-
-pred_data <- data.frame(
-  daily_usage_time_minutes = seq(min(data$daily_usage_time_minutes),
-                                 max(data$daily_usage_time_minutes),
-                                 length.out = 100)
+# Calcul de la matrice de corrélation
+cor_matrix <- cor(
+  select(data,
+         daily_usage_time_minutes,
+         posts_per_day,
+         engagement_score,
+         anxiety_binary
+  ),
+  use = "complete.obs"
 )
-pred_data$predicted_prob <- predict(model, newdata = pred_data, type = "response")
 
-ggplot(data, aes(x = daily_usage_time_minutes, y = anxiety_binary)) +
-  geom_point(alpha = 0.3, position = position_jitter(height = 0.02),
-             color = "#4E79A7", size = 2) +
-  geom_line(data = pred_data, aes(x = daily_usage_time_minutes, y = predicted_prob),
-            color = "#E15759", linewidth = 2) +
-  geom_vline(xintercept = 120, linetype = "dashed", color = "orange", linewidth = 1.5) +
-  annotate("text", x = 130, y = 0.8, label = "Seuil critique\n2h/jour", 
-           color = "orange", size = 5, fontface = "bold", hjust = 0) +
-  labs(
-    title = "Probabilité d'Anxiété selon le Temps d'Usage",
-    subtitle = "Modèle de régression logistique",
-    x = "Temps d'utilisation (minutes/jour)",
-    y = "Probabilité d'anxiété"
-  ) +
-  scale_y_continuous(labels = scales::percent_format()) +
-  theme_minimal(base_size = 14) +
-  theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 18))
+cat("📊 MATRICE DE CORRÉLATION AVEC ANXIÉTÉ:\n")
+cat("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n")
+cat("• Temps d'usage     : r =", round(cor_matrix["daily_usage_time_minutes", "anxiety_binary"], 3), "\n")
+cat("• Posts par jour    : r =", round(cor_matrix["posts_per_day", "anxiety_binary"], 3), "\n")
+cat("• Score d'engagement: r =", round(cor_matrix["engagement_score", "anxiety_binary"], 3), "\n\n")
+
+cat("💡 INTERPRÉTATION:\n")
+cat("Corrélations très faibles → Le temps d'usage seul\n")
+cat("n'explique PAS l'anxiété. D'autres facteurs dominent.\n")
 ```
+
+::: {.callout-warning}
+## ⚠️ Résultat Corrélation
+
+
+**DÉCOUVERTE CLÉ : Temps d'usage ≠ Anxiété**
+
+- Temps d'usage ↔ Anxiété : r = -0.004 (NUL)
+- Engagement ↔ Anxiété : r = -0.021 (NUL)
+- Messages ↔ Anxiété : r = +0.072 (faible)
+
+**Par contre :**
+- Temps ↔ Likes : r = 0.941 (très fort)
+- Posts ↔ Engagement : r = 0.967 (très fort)
+
+**Conclusion :** Les métriques d'usage mesurent la même chose (activité), 
+mais cette activité n'explique PAS l'anxiété !
+:::
 
 ---
 
@@ -485,184 +544,377 @@ ggplot(data, aes(x = daily_usage_time_minutes, y = anxiety_binary)) +
 
 ```{webr-r}
 #| echo: false
-# Clustering
-cluster_data <- data %>%
-  select(daily_usage_time_minutes, posts_per_day, engagement_score, age) %>%
-  scale()
+#| fig-width: 12
+#| fig-height: 6
 
+library(dplyr)
+library(ggplot2)
+
+cat("CLUSTERING DES PROFILS D'UTILISATION\n")
+
+# Préparation des données pour le clustering
+cluster_data <- data %>%
+  dplyr::select(
+    daily_usage_time_minutes,
+    posts_per_day,
+    engagement_score,
+    age
+  ) %>%
+  scale()  # Standardisation
+
+# Méthode du coude pour déterminer k optimal
+cat("🔍 1. DÉTERMINATION DU NOMBRE OPTIMAL DE CLUSTERS:\n")
+wss <- sapply(1:10, function(k) {
+  kmeans(cluster_data, centers = k, nstart = 25)$tot.withinss
+})
+
+elbow_plot <- data.frame(k = 1:10, wss = wss)
+p9 <- ggplot(elbow_plot, aes(x = k, y = wss)) +
+  geom_line(color = "steelblue", linewidth = 1) +
+  geom_point(color = "steelblue", size = 3) +
+  geom_vline(xintercept = 3, linetype = "dashed", color = "red", alpha = 0.5) +
+  labs(
+    title = "Méthode du coude pour la sélection de k",
+    subtitle = "Réduction marginale de la variance intra-cluster",
+    x = "Nombre de clusters (k)",
+    y = "Somme des carrés intra-cluster"
+  ) +
+  scale_x_continuous(breaks = 1:10) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold"))
+
+print(p9)
+
+# Application du clustering avec k=3
+cat("\n🎯 2. APPLICATION DU CLUSTERING AVEC k=3:\n")
 set.seed(123)
 kmeans_result <- kmeans(cluster_data, centers = 3, nstart = 25)
 data$cluster <- as.factor(kmeans_result$cluster)
 
+# Profil des clusters
 cluster_profile <- data %>%
   group_by(cluster) %>%
   summarise(
     n = n(),
+    avg_age = round(mean(age), 1),
     avg_usage = round(mean(daily_usage_time_minutes), 0),
+    avg_posts = round(mean(posts_per_day), 1),
+    avg_engagement = round(mean(engagement_score), 1),
     anxiety_rate = round(mean(anxiety_binary) * 100, 1),
     .groups = "drop"
   ) %>%
-  mutate(pct = round(n/sum(n)*100, 1))
+  mutate(
+    size_percent = round(n / sum(n) * 100, 1),
+    cluster_label = paste0("Cluster ", cluster, "\n",
+                          size_percent, "%\n",
+                          "Anxiété: ", anxiety_rate, "%")
+  )
 
+cat("📊 PROFILS DES CLUSTERS IDENTIFIÉS:\n")
 print(cluster_profile)
+
+# Visualisation des clusters
+p10 <- ggplot(data, aes(x = daily_usage_time_minutes, y = posts_per_day, color = cluster)) +
+  geom_point(alpha = 0.6, size = 2.5) +
+  stat_ellipse(type = "norm", level = 0.95, linewidth = 1, alpha = 0.3) +
+  geom_point(data = cluster_profile, 
+             aes(x = avg_usage, y = avg_posts),
+             shape = 17, size = 5, color = "black") +
+  labs(
+    title = "Segmentation des utilisateurs par comportement d'usage",
+    subtitle = "Clustering K-means (k=3) basé sur l'usage et l'engagement",
+    x = "Temps d'utilisation quotidien (minutes)",
+    y = "Nombre de posts par jour",
+    color = "Cluster",
+    caption = "Triangle noir = centre de chaque cluster | Ellipses = 95% de confiance"
+  ) +
+  scale_color_manual(
+    values = c("1" = "#4E79A7", "2" = "#F28E2B", "3" = "#59A14F"),
+    labels = setNames(cluster_profile$cluster_label, cluster_profile$cluster)
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 14),
+    legend.position = "right",
+    legend.text = element_text(size = 9)
+  )
+
+print(p10)
 ```
 
 ::: {.columns}
 ::: {.column width="33%"}
-### 🟢 Cluster 1
-**Utilisateurs Sains**
+### 🟡 Cluster 1
+**Usage Modéré**
 
-- 35% de la population
-- ~90 min/jour
-- Anxiété: 12%
+- **42%** de la population
+- ~84 min/jour
+- Anxiété: **21%**
 :::
 
 ::: {.column width="33%"}
-### 🟡 Cluster 2
-**Usage Modéré**
+### 🟢 Cluster 2
+**Utilisateurs Prudents**
 
-- 37% de la population
-- ~110 min/jour
-- Anxiété: 18%
+- **31%** de la population
+- ~67 min/jour  
+- Anxiété: **16%** ✅
 :::
 
 ::: {.column width="33%"}
 ### 🔴 Cluster 3
-**ZONE À RISQUE**
+**Usage Intensif**
 
-- 28% de la population
-- ~180 min/jour
-- **Anxiété: 32%**
+- **27%** de la population
+- ~150 min/jour
+- Anxiété: **11%** (!?)
 :::
+:::
+
+::: {.callout-note}
+## ⚠️ Paradoxe Majeur
+Le Cluster 3 (usage le plus élevé) a l'anxiété **LA PLUS FAIBLE** !
+
+**Hypothèses explicatives** :
+- Utilisateurs adaptés/résilients
+- Causalité inverse (anxieux → réduisent usage)
+- Facteurs de protection non mesurés
 :::
 
 ---
 
-## 💡 Résultats Clés en 60 Secondes {background-color="#1a472a"}
+## 💡 Résultats Clés : La Réalité Complexe {background-color="#1a472a"}
 
 ::: {.r-fit-text}
-**4 CHIFFRES À RETENIR**
+**5 DÉCOUVERTES MAJEURES**
 :::
 
 ::: {.columns}
 ::: {.column width="50%"}
-### 🎯 120 minutes/jour
-**Le seuil critique**
+### 📊 Relation Non Linéaire
+**Corrélation : r = -0.004**
 
-Au-delà : anxiété ×2.5
+Pas de lien simple usage ↔ anxiété
 
 ---
 
-### 🔴 28.3%
-**Population à risque**
+### 🟢 Profil Optimal : 67 min/jour
+**Cluster 2 (31% users)**
 
-Cluster 3 : usage intensif
+Anxiété la plus faible : 16%
+
+---
+
+### 🔴 Paradoxe Usage Intensif
+**150 min/jour → 11% anxiété**
+
+Utilisateurs adaptés ou résilients
 :::
 
 ::: {.column width="50%"}
-### 📱 Instagram
-**Plateforme #1 anxiogène**
+### 🎯 Genre > Temps d'Usage
+**Non-binary : +21.6% risque**
 
-68% des cas d'anxiété
+Facteur le plus important du modèle
 
 ---
 
-### 👶 18-25 ans
-**Groupe vulnérable**
+### ⚠️ Hétérogénéité Importante
+**Pas de seuil universel**
 
-2× plus sensibles que 36+
+Impact dépend du profil individuel
+
+---
+
+### 📱 Plateformes Variables
+**Instagram & Snapchat**
+
+Plus anxiogènes que les autres
 :::
 :::
 
 ---
 
-## 🚀 Recommandations Stratégiques {.smaller}
+## 🔍 Synthèse : Ce que Révèlent VRAIMENT les Données {.smaller}
+
+::: {.panel-tabset}
+
+### Analyses Descriptives
+
+**✅ Observations directes :**
+
+- Taux d'anxiété global : ~17-18%
+- Variation visible entre niveaux d'usage
+- Différences marquées entre plateformes
+- 3 profils d'utilisateurs distincts émergent
+
+**⚠️ Mais attention :**
+
+Ces observations ne prouvent PAS la causalité !
+
+### Modélisation
+
+**🎯 Régression Logistique Multivariée :**
+
+```
+Temps d'usage : OR = 1.000 (EFFET NUL)
+Âge          : OR = 1.028 (+2.8%/an)
+Genre Male   : OR = 1.008 (négligeable)
+Non-binary   : OR = 1.216 (+21.6% !)
+```
+
+**📊 Corrélations :**
+
+```
+usage-anxiété     : r = -0.004
+engagement-anxiété: r = -0.021
+```
+
+**Conclusion Modèle :** Le temps d'usage N'EST PAS un prédicteur significatif
+
+### Le Paradoxe Expliqué
+
+**🔬 Pourquoi cette différence ?**
+
+1. **Analyses bivariées** : comparent groupes sans contrôler autres variables
+   
+2. **Analyse multivariée** : contrôle pour âge, genre → effet disparaît
+
+3. **Clustering** : groupe intensif MOINS anxieux (11%)
+
+**💡 Explications Possibles :**
+
+- **Causalité inverse** : anxieux → réduisent usage
+- **Sélection** : seuls non-anxieux maintiennent usage élevé
+- **Variables omises** : personnalité, support social, type contenu
+- **Relation en U** : faible ET fort usage → moins d'anxiété
+
+### Limites Critiques
+
+**⚠️ IMPORTANT À RETENIR :**
+
+1. **Données transversales** → pas de causalité
+### Limites Critiques
+
+**⚠️ IMPORTANT À RETENIR :**
+
+1. **Données transversales** → pas de causalité établie
+2. **Auto-déclaration** → biais de mesure possible
+3. **Variables manquantes** : personnalité, type de contenu, support social
+4. **Échantillon non probabiliste** → généralisation limitée
+
+**📌 Ce qu'on PEUT affirmer :**
+- 3 profils d'utilisateurs distincts existent
+- Facteurs démographiques (genre, âge) importants
+- Relation usage-anxiété complexe et non linéaire
+
+**📌 Ce qu'on NE PEUT PAS affirmer :**
+- Que l'usage cause l'anxiété
+- Qu'il existe un seuil universel (ex: 2h)
+- Que réduire l'usage réduit automatiquement l'anxiété
+
+:::
+
+---
+
+## 🚀 Recommandations Ajustées {.smaller}
 
 ::: {.panel-tabset}
 
 ### Court terme (3 mois)
 
-#### 🎓 Sensibilisation
-- Campagne "2h = ligne rouge"
-- Outils d'auto-surveillance
-- Alertes push personnalisées
+#### 🎓 Sensibilisation Nuancée
+- ❌ ~~"2h = ligne rouge universelle"~~
+- ✅ **"Connaître son profil d'usage"**
+- Outils d'auto-évaluation personnalisée
+- Messages adaptés par segment
 
-#### 🏥 Intervention ciblée
-- Programme pour le Cluster 3 (28% population)
-- Accompagnement psychologique
-- Groupes de soutien
+#### 🏥 Interventions Ciblées
+**Focus populations vulnérables :**
+- Jeunes 18-25 ans (plus sensibles)
+- Personnes non-binaires (+21.6% risque)
+- Nouveaux utilisateurs
+- Accompagnement psychologique adapté
 
 ### Moyen terme (6-12 mois)
 
-#### 🔬 Recherche & Développement
-- Étude longitudinale (suivi 12 mois)
-- Algorithme de détection précoce
-- Analyse spécifique par plateforme
+#### 🔬 Recherche Approfondie
+**PRIORITÉ : Étude longitudinale**
+- Suivi 12-24 mois minimum
+- Établir causalité
+- Observer évolution profils
 
-#### 📊 Monitoring
-- Dashboard temps réel
-- KPIs : % >2h/jour, taux anxiété
-- Évaluation impact interventions
+**Analyses complémentaires :**
+- Type/qualité du contenu consommé
+- Variables de personnalité (Big Five)
+- Support social offline
+- Modèles d'interaction (âge × usage × plateforme)
+
+#### 📊 Monitoring Intelligent
+- Dashboards par profil (pas juste temps brut)
+- KPIs adaptés par segment
+- Suivi évolution dans le temps
 
 ### Long terme (2 ans)
 
-#### 🏛️ Politiques Publiques
-- Éducation numérique obligatoire
-- Régulation fonctionnalités addictives
-- Droit à la déconnexion
+#### 🏛️ Politiques Basées sur Preuves
+- ❌ Régulation temps d'écran uniforme
+- ✅ **Approche différenciée par profil**
+- Protection renforcée populations vulnérables
+- Éducation numérique adaptative
 
-#### 🌍 Collaboration Internationale
-- Standards de sécurité mentale
-- Partage de données recherche
-- Best practices globales
+#### 🌍 Collaboration Recherche
+- Standards méthodologiques rigoureux
+- Partage données longitudinales
+- Reproductibilité études
+- Meta-analyses internationales
 
 :::
 
 ---
 
 ## 📈 Plan d'Action Immédiat {.smaller}
-
 ```{mermaid}
 %%| fig-width: 12
 gantt
-    title Feuille de Route des Interventions
+    title Feuille de Route Recherche & Interventions
     dateFormat  YYYY-MM-DD
-    section Phase 1
-    Campagne sensibilisation    :a1, 2025-02-01, 90d
-    Formation professionnels    :a2, 2025-02-15, 60d
-    section Phase 2
-    Pilote Cluster 3           :b1, 2025-04-01, 120d
-    Outils auto-surveillance   :b2, 2025-03-01, 150d
-    section Phase 3
-    Étude longitudinale        :c1, 2025-06-01, 365d
-    Évaluation impact          :c2, 2025-10-01, 180d
+    section Phase 1: Recherche
+    Étude longitudinale        :a1, 2025-02-01, 365d
+    Mesures objectives usage   :a2, 2025-03-01, 180d
+    section Phase 2: Interventions
+    Programme profils à risque :b1, 2025-04-01, 180d
+    Outils auto-évaluation    :b2, 2025-03-01, 240d
+    section Phase 3: Évaluation
+    Analyse impact            :c1, 2025-10-01, 180d
+    Publication résultats     :c2, 2026-01-01, 120d
 ```
 
 ---
 
-## ✅ Conclusion : Agir Maintenant {background-color="#1a1a1a"}
+## ✅ Conclusion : Une Réalité Plus Complexe {background-color="#1a1a1a"}
 
 ::: {.r-fit-text}
-**L'URGENCE EST RÉELLE**
+**AU-DELÀ DES IDÉES REÇUES**
 :::
 
 <br>
 
 ::: {.incremental}
-- ✅ **Relation prouvée** : Usage excessif → Anxiété
-- ✅ **Profils identifiés** : 28% de la population à risque
-- ✅ **Solutions actionnables** : Interventions ciblées possibles
-- ✅ **Fenêtre d'opportunité** : Agir avant aggravation
+- ✅ **Relation existe** : Mais elle est **complexe et non linéaire**
+- ✅ **Profils identifiés** : 3 segments avec besoins différents
+- ✅ **Facteurs clés** : Genre et âge > temps d'usage brut
+- ✅ **Besoin critique** : Études longitudinales pour causalité
 :::
 
 <br>
 
 ::: {.fragment}
 ::: {.callout-important}
-## Message final
-**"2 heures par jour : la ligne rouge à ne pas franchir"**
+## Message Final Nuancé
+**"Il n'existe pas de seuil universel. L'impact dépend de QUI vous êtes et COMMENT vous utilisez les réseaux sociaux"**
 
-Protégeons notre santé mentale à l'ère numérique.
+Approche personnalisée > règle générale
 :::
 :::
 
@@ -673,52 +925,132 @@ Protégeons notre santé mentale à l'ère numérique.
 ### Méthodologie Détaillée
 
 - **Échantillon:** N=1000 utilisateurs (18-70 ans)
-- **Période:** Décembre 2025
+- **Période:** Janvier 2025
 - **Variables:** 10 variables principales
-- **Analyses:** Régression logistique, K-means clustering
-- **Logiciels:** R 4.3, WebR, Quarto
+- **Analyses:** 
+  - Statistiques descriptives
+  - Régression logistique multivariée
+  - K-means clustering (k=3)
+  - Matrice de corrélation
+- **Logiciels:** R 4.3, WebR, Quarto, ggplot2, dplyr
 
-### Limitations
+### Résultats Statistiques Clés
 
-- Données transversales (pas de causalité directe)
-- Auto-déclaration émotionnelle (biais possible)
-- Échantillon non-probabiliste
-- Nécessité d'études longitudinales
+**Régression Logistique :**
+```
+anxiety ~ usage + age + gender
+OR usage = 1.000 (p > 0.05)
+OR age = 1.028 (p < 0.05)
+OR non-binary = 1.216 (p < 0.05)
+```
 
-### Prochaines Étapes
+**Clustering K-means :**
+```
+k = 3 clusters optimaux
+Cluster 1: 42% (84 min, 21% anxiété)
+Cluster 2: 31% (67 min, 16% anxiété) ← Optimal
+Cluster 3: 27% (150 min, 11% anxiété) ← Paradoxe
+```
 
-1. Validation sur échantillon indépendant
-2. Analyse qualitative complémentaire
-3. Test interventions pilotes
-4. Publication scientifique
+**Corrélations avec Anxiété :**
+```
+Temps d'usage: r = -0.004 (non significatif)
+Engagement: r = -0.021 (non significatif)
+Messages: r = +0.072 (faible)
+```
 
-### Contact
+### Limitations Reconnues
 
-📧 zaineb.benfadhl@polytechnicien.tn 
-🐙 github.com/votre-repo  
-🔗 linkedin.com/in/votre-profil
+1. **Causalité** : Données transversales, pas de lien causal établi
+2. **Mesure** : Auto-déclaration (biais de désirabilité sociale)
+3. **Échantillon** : Non-probabiliste, généralisation limitée
+4. **Variables** : Facteurs confondants non mesurés (personnalité, support social, type contenu)
+5. **Temporalité** : Snapshot instantané, pas d'évolution temporelle
+
+### Prochaines Étapes ESSENTIELLES
+
+**PRIORITÉ ABSOLUE :**
+1. Étude longitudinale 12-24 mois
+2. Mesures objectives temps d'écran
+3. Variables psychologiques (Big Five, résilience)
+4. Type et qualité du contenu
+
+**Analyses Complémentaires :**
+5. Modèles d'interaction (âge × usage × plateforme)
+6. Tests interventions par profil
+7. Validation échantillon indépendant
+
+### Contributions Scientifiques
+
+- Identification de 3 profils utilisateurs distincts
+- Rôle clé de l'identité de genre (+21.6% risque non-binaire)
+- Démonstration complexité relation usage-anxiété
+- Nécessité approches personnalisées vs règles universelles
+- Importance recherche longitudinale future
+
+### Données & Reproductibilité
+
+📊 **Données** : Disponibles sur GitHub  
+💻 **Code** : Analyse complète reproductible  
+📝 **Documentation** : Méthodologie détaillée  
+🔬 **Transparence** : Limites clairement exposées
+
+### Contact & Collaborations
+
+📧 **Email** : zaineb.benfadhl@polytechnicien.tn  
+🐙 **GitHub** : [github.com/zaineb-ben-fadhl/Project_R](https://github.com/zaineb-ben-fadhl/Project_R)  
+🔗 **LinkedIn** : [Votre profil]
+
+**Ouvert à :**
+- Collaborations recherche
+- Suggestions méthodologiques
+- Critiques constructives
+- Partage de données
 
 ---
 
-## Merci ! Questions ? {background-image="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1920" background-opacity="0.3"}
+## Merci pour Votre Attention ! {background-image="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1920" background-opacity="0.3"}
 
 ::: {.r-fit-text}
-**Échangeons !**
+**Questions & Discussion**
 :::
 
 <br><br>
 
 ::: {.columns}
 ::: {.column width="50%"}
-### 📊 Code & Données
-Disponible sur GitHub
+### 📊 Accès aux Données
 
-[→ Accéder au repo](https://github.com/votre-repo)
+**Code & Analyses Complètes**
+
+[→ GitHub Repository](https://github.com/zaineb-ben-fadhl/Project_R)
+
+**Reproductibilité totale**
+- Scripts R complets
+- Données source
+- Documentation méthodologique
 :::
 
 ::: {.column width="50%"}
-### 📧 Contact
-zaineb.benfadhl@polytechnicien.tn
+### 💬 Restons en Contact
 
+**zaineb.benfadhl@polytechnicien.tn**
+
+**Intéressée par :**
+- Collaborations de recherche
+- Feedback méthodologique
+- Discussions sur les limites
+- Partage d'expériences
+
+**La science avance par le dialogue !**
+:::
+:::
+
+<br>
+
+::: {.fragment}
+::: {.callout-tip}
+## 💡 Retenez l'Essentiel
+La relation entre réseaux sociaux et santé mentale est **bien plus complexe** qu'un simple "trop de temps = anxiété". L'approche personnalisée basée sur les profils est la voie d'avenir.
 :::
 :::

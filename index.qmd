@@ -195,4 +195,5 @@ kbl(variables_table, caption = "Description des variables du dataset") %>%
 
 ---
 
+
 *Ce projet a été réalisé dans le cadre du module "Statistiques Appliquées avec R" - Janvier 2025*
