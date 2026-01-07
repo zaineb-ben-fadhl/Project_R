@@ -282,7 +282,7 @@ cat("   - Âge moyen:", round(mean(data$age), 1), "ans\n")
 cat("   - Usage moyen:", round(mean(data$daily_usage_time_minutes), 1), "minutes/jour\n")
 cat("   - Taux d'anxiété global:", round(mean(data$anxiety_binary) * 100, 1), "%\n")
 ```
-Interprétation : L'analyse descriptive révèle plusieurs insights fondamentaux. La distribution normale de l'âge et du temps d'usage suggère un échantillon représentatif. La prédominance de certaines plateformes reflète les tendances d'usage actuelles. La distribution des émotions montre une diversité d'états psychologiques post-usage, avec un taux d'anxiété notable qui mérite une investigation approfondie.
+
 
 
 ### 3.2 Analyse des corrélations
@@ -500,11 +500,6 @@ p4 <- ggplot(data, aes(x = age_group, y = daily_usage_time_minutes, fill = age_g
 
 grid.arrange(p3, p4, ncol = 2)
 ```
-Interprétation des graphiques :
-
-Graphique gauche (Genre) : Les différences entre genres sont visibles mais modérées. Les femmes montrent une médiane légèrement plus élevée, tandis que les non-binaires présentent la plus grande variabilité. Les points de données individuels révèlent la diversité des comportements au sein de chaque groupe.
-
-Graphique droit (Âge) : La tendance décroissante avec l'âge est claire : les 18-25 ans sont les plus grands utilisateurs. La forme des violons montre des distributions différentes : bimodale pour les 26-30 ans, plus concentrée pour les 36+.
 
 ###  4.3 Analyse des plateformes et émotions
 
@@ -681,11 +676,7 @@ library(gridExtra)
 grid.arrange(p7, p8, ncol = 2)
 
 ```
-Interprétation des graphiques :
 
-Graphique gauche (Tendance) : La relation dose-réponse est claire : le taux d'anxiété augmente régulièrement avec le temps d'usage. L'absence de chevauchement des intervalles de confiance indique des différences statistiquement significatives entre les niveaux d'usage.
-
-Graphique droit (Modélisation) : La courbe sigmoïde caractéristique de la régression logistique montre comment la probabilité d'anxiété augmente de façon non linéaire avec le temps d'usage. L'Odds Ratio de 1.016 signifie qu'à chaque minute supplémentaire d'usage quotidien, les chances d'anxiété augmentent de 1.6%.
 
 ##  Étape 5 : Modélisation statistique avancée
 
@@ -764,7 +755,7 @@ lr_test <- pchisq(null_deviance - residual_deviance,
 cat("   - Test du rapport de vraisemblance: p =", format.pval(lr_test, digits = 3), "\n")
 
 ```
-Interprétation : Le modèle de régression logistique révèle plusieurs insights importants. Le temps d'usage quotidien est le prédicteur le plus fort de l'anxiété, confirmant l'hypothèse principale. L'âge montre un effet protecteur modeste. Le genre n'apparaît pas comme un facteur significatif dans ce modèle multivarié. La qualité du modèle (Pseudo R²) indique une bonne capacité explicative compte tenu de la complexité du phénomène.
+
 
 ### 5.2 Segmentation par clustering
 ```{webr-r}
@@ -870,135 +861,7 @@ p10 <- ggplot(data, aes(x = daily_usage_time_minutes, y = posts_per_day, color =
 
 print(p10)
 ```
- Interprétation du Clustering : 3 Profils Distincts
- Résultats du Clustering K-means (k=3)
-Le clustering identifie trois segments distincts d'utilisateurs avec des résultats contre-intuitifs :
-
-🟡 Cluster 1 (42.2%) : Usage Modéré - Anxiété Modérée
-Profil : Utilisateurs "moyens"
-
-Proportion : Plus grand groupe (42%)
-Usage quotidien : ~84 minutes/jour
-Anxiété : 21.1% - taux le plus élevé des trois clusters (!!)
-Caractéristiques :
-
-Engagement modéré
-Ni très actifs, ni très passifs
-Paradoxalement le groupe le MOINS bien protégé
-
-
-
- Interprétation : Groupe intermédiaire sans stratégie claire d'usage
-
-🟢Cluster 2 (31.2%) : Usage Prudent - Profil Optimal
-Profil : Les "utilisateurs sains" ✅
-
-Proportion : Second groupe (31%)
-Usage quotidien : ~67 minutes/jour (le plus faible)
-Anxiété : 16.3% - taux le PLUS BAS ✅
-Caractéristiques :
-
-Usage limité et contrôlé
-Engagement raisonnable
-Le profil à promouvoir
-
-
-
-💡 Interprétation : Usage modéré = protection optimale contre l'anxiété
-
-🔴 Cluster 3 (26.6%) : Usage Intensif - Paradoxe Majeur
-Profil : Les "power users" résilients (!?)
-
-Proportion : Plus petit groupe (27%)
-Usage quotidien : ~150 minutes/jour (le plus élevé - 2.5h)
-Anxiété : 11.3% - taux TRÈS BAS (!!)
-Caractéristiques :
-
-Engagement très élevé
-Usage intensif mais...
-Moins anxieux que les autres 
-
-
-
-
-## Étape 6 : Synthèse et recommandations
-```{webr-r}
-#| echo: true
-#| warning: false
-#| message: false
-#| label: synthesis
-
-
-cat("SYNTHÈSE GLOBALE DES RÉSULTATS\n")
-
-
-cat("🎯 PRINCIPAUX INSIGHTS IDENTIFIÉS:\n\n")
-
-cat("1. RELATION USAGE-ANXIÉTÉ CONFIRMÉE:\n")
-cat("   • Corrélation positive significative (r =", 
-    round(cor(data$daily_usage_time_minutes, data$anxiety_binary), 3), ")\n")
-cat("   • Taux d'anxiété multiplié par", 
-    round(max(anxiety_by_usage$anxiety_rate) / min(anxiety_by_usage$anxiety_rate), 1),
-    "entre usage faible et très élevé\n")
-cat("   • Seuil critique observé autour de 120 minutes/jour (2 heures)\n\n")
-
-cat("2. PROFILS D'UTILISATEURS À RISQUE:\n")
-high_risk_cluster <- cluster_profile %>% 
-  filter(anxiety_rate == max(anxiety_rate))
-cat("   • Cluster", high_risk_cluster$cluster, ":", 
-    round(high_risk_cluster$size_percent, 1), "% de l'échantillon\n")
-cat("   • Caractéristiques: usage >", round(high_risk_cluster$avg_usage, 0), 
-    "min/jour, fort engagement\n")
-cat("   • Taux d'anxiété:", round(high_risk_cluster$anxiety_rate, 1), "%\n\n")
-
-cat("3. RÔLE SPÉCIFIQUE DES PLATEFORMES:\n")
-cat("   • Instagram: plus engageante mais aussi plus anxiogène\n")
-cat("   • LinkedIn: faible risque émotionnel (usage utilitaire)\n")
-cat("   • Facebook/Twitter: profils émotionnels mixtes\n")
-cat("   • WhatsApp/Telegram: plutôt associés à des émotions neutres\n\n")
-
-cat("4. FACTEURS DÉMOGRAPHIQUES:\n")
-cat("   • Âge: effet protecteur (les plus jeunes plus à risque)\n")
-cat("   • Genre: différences mineures, non significatives en multivarié\n")
-cat("   • Groupe 18-25 ans: plus grand usage et risque accru\n\n")
-
-cat("🏆 RECOMMANDATIONS OPÉRATIONNELLES:\n\n")
-
-cat("1. SENSIBILISATION ET PRÉVENTION:\n")
-cat("   • Campagne sur le seuil des 2h/jour comme repère critique\n")
-cat("   • Développement d'outils d'autosurveillance du temps d'écran\n")
-cat("   • Éducation aux signes précoces de dépendance numérique\n\n")
-
-cat("2. INTERVENTIONS CIBLÉES:\n")
-cat("   • Programme spécifique pour les utilisateurs intensifs d'Instagram\n")
-cat("   • Accompagnement personnalisé pour le cluster à haut risque (", 
-    round(high_risk_cluster$size_percent, 1), "% de la population)\n")
-cat("   • Promotion d'activités alternatives pour les jeunes adultes\n\n")
-
-cat("3. RECHERCHE ET DÉVELOPPEMENT:\n")
-cat("   • Étude longitudinale sur les effets à long terme\n")
-cat("   • Développement d'algorithmes de détection précoce\n")
-cat("   • Recherche sur les mécanismes spécifiques plateforme par plateforme\n\n")
-
-cat("4. POLITIQUES PUBLIQUES:\n")
-cat("   • Intégration de l'éducation numérique dans les programmes scolaires\n")
-cat("   • Régulation des fonctionnalités addictives des plateformes\n")
-cat("   • Soutien aux initiatives de déconnexion numérique\n\n")
-
-cat("📊 INDICATEURS DE SUIVI PROPOSÉS:\n")
-cat("   1. Taux d'anxiété dans la population générale\n")
-cat("   2. Proportion d'utilisateurs dépassant 2h/jour\n")
-cat("   3. Évolution des profils de clusters sur le temps\n")
-cat("   4. Impact des interventions ciblées sur le cluster à risque\n\n")
-
-cat("✅ CONCLUSION:\n")
-cat("Cette analyse démontre clairement le lien entre l'usage intensif des réseaux sociaux\n")
-cat("et l'anxiété. La méthodologie employée permet d'identifier des profils à risque\n")
-cat("spécifiques et de formuler des recommandations actionnables pour les décideurs\n")
-cat("politiques, les professionnels de santé et les éducateurs.\n")
-
-```
-
+ 
 
 ## Conclusion
 Cette étude démontre la puissance des méthodes analytiques modernes pour comprendre les relations complexes entre comportements numériques et santé mentale. L'approche méthodologique rigoureuse, combinant statistiques descriptives, modélisation prédictive et segmentation, fournit des insights actionnables pour la prévention et l'intervention.
