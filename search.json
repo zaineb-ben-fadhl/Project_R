@@ -15,7 +15,7 @@
     "href": "qmd/presentation.html#objectifs-de-létude",
     "title": "Impact des Réseaux Sociaux sur la Santé Mentale",
     "section": "🎯 Objectifs de l’Étude",
-    "text": "🎯 Objectifs de l’Étude\n\nQuantifier la relation entre temps d’usage et anxiété\nIdentifier les profils d’utilisateurs à risque\nComparer l’impact des différentes plateformes\nProposer des interventions ciblées\n\n\n\n\n\n\n\n\nHypothèse principale\n\n\nH₁: Une corrélation positive existe entre le temps d’utilisation quotidien et la prévalence de l’anxiété",
+    "text": "🎯 Objectifs de l’Étude\n\nQuantifier la relation entre temps d’usage et anxiété\nIdentifier les profils d’utilisateurs à risque\nComparer l’impact des différentes plateformes\nProposer des interventions ciblées\n\n\n\n\n\n\n\n\nHypothèse principale\n\n\nH₁: Une corrélation existe entre le temps d’utilisation quotidien et la prévalence de l’anxiété",
     "crumbs": [
       "Presentations",
       "Impact des Réseaux Sociaux sur la Santé Mentale"
@@ -88,11 +88,11 @@
     ]
   },
   {
-    "objectID": "qmd/presentation.html#le-seuil-critique-2hjour",
-    "href": "qmd/presentation.html#le-seuil-critique-2hjour",
+    "objectID": "qmd/presentation.html#variation-de-lanxiété-par-niveau-dusage",
+    "href": "qmd/presentation.html#variation-de-lanxiété-par-niveau-dusage",
     "title": "Impact des Réseaux Sociaux sur la Santé Mentale",
-    "section": "🎯 Le Seuil Critique : 2h/jour",
-    "text": "🎯 Le Seuil Critique : 2h/jour\n\nDÉCOUVERTE MAJEURE\n\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n🔴 Le taux d’anxiété TRIPLE entre usage faible et très élevé",
+    "section": "📊 Variation de l’Anxiété par Niveau d’Usage",
+    "text": "📊 Variation de l’Anxiété par Niveau d’Usage\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n\n\n\n\n\n📊 Observation Descriptive\n\n\nVariation visible entre groupes, mais la relation n’est pas linéaire",
     "crumbs": [
       "Presentations",
       "Impact des Réseaux Sociaux sur la Santé Mentale"
@@ -103,7 +103,7 @@
     "href": "qmd/presentation.html#impact-des-plateformes",
     "title": "Impact des Réseaux Sociaux sur la Santé Mentale",
     "section": "📱 Impact des Plateformes",
-    "text": "📱 Impact des Plateformes\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n\n\n\n\n\nWarning\n\n\nInstagram = la plateforme la plus anxiogène",
+    "text": "📱 Impact des Plateformes\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n\n\n\n\n\n🚨 Aucune plateforme n’est émotionnellement “saine”\n\n\n\nInstagram → Anxiété de comparaison sociale\nWhatsApp/Twitter → Colère interpersonnelle\nLinkedIn → Ennui professionnel\n\nSnapchat/TikTok → Anxiété de performance (FOMO)",
     "crumbs": [
       "Presentations",
       "Impact des Réseaux Sociaux sur la Santé Mentale"
@@ -114,18 +114,18 @@
     "href": "qmd/presentation.html#modèle-prédictif-régression-logistique",
     "title": "Impact des Réseaux Sociaux sur la Santé Mentale",
     "section": "🎯 Modèle Prédictif : Régression Logistique",
-    "text": "🎯 Modèle Prédictif : Régression Logistique\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n\n\n\n\n\nInterprétation\n\n\nChaque minute supplémentaire d’usage augmente de 1.6% le risque d’anxiété\nOdds Ratio = 1.016 → +1.6% par minute → +96% pour 60 minutes",
+    "text": "🎯 Modèle Prédictif : Régression Logistique\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n\n\n\n\n\n📊 Interprétation des Résultats\n\n\nTemps d’usage (OR = 1.000) : AUCUN EFFET sur l’anxiété quand on contrôle pour âge et genre\nÂge (OR = 1.028) : Chaque année d’âge augmente le risque de 2.8%\nGenre Male (OR = 1.008) : Effet négligeable (+0.8%)\nGenre Non-binary (OR = 1.216) : +21.6% de risque - facteur le plus important!",
     "crumbs": [
       "Presentations",
       "Impact des Réseaux Sociaux sur la Santé Mentale"
     ]
   },
   {
-    "objectID": "qmd/presentation.html#courbe-de-prédiction",
-    "href": "qmd/presentation.html#courbe-de-prédiction",
+    "objectID": "qmd/presentation.html#analyse-des-corrélations",
+    "href": "qmd/presentation.html#analyse-des-corrélations",
     "title": "Impact des Réseaux Sociaux sur la Santé Mentale",
-    "section": "📊 Courbe de Prédiction",
-    "text": "📊 Courbe de Prédiction\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.",
+    "section": "📊 Analyse des Corrélations",
+    "text": "📊 Analyse des Corrélations\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n\n\n\n\n\n⚠️ Résultat Corrélation\n\n\nDÉCOUVERTE CLÉ : Temps d’usage ≠ Anxiété\n\nTemps d’usage ↔︎ Anxiété : r = -0.004 (NUL)\nEngagement ↔︎ Anxiété : r = -0.021 (NUL)\nMessages ↔︎ Anxiété : r = +0.072 (faible)\n\nPar contre : - Temps ↔︎ Likes : r = 0.941 (très fort) - Posts ↔︎ Engagement : r = 0.967 (très fort)\nConclusion : Les métriques d’usage mesurent la même chose (activité), mais cette activité n’explique PAS l’anxiété !",
     "crumbs": [
       "Presentations",
       "Impact des Réseaux Sociaux sur la Santé Mentale"
@@ -136,29 +136,40 @@
     "href": "qmd/presentation.html#segmentation-3-profils-dutilisateurs",
     "title": "Impact des Réseaux Sociaux sur la Santé Mentale",
     "section": "🔬 Segmentation : 3 Profils d’Utilisateurs",
-    "text": "🔬 Segmentation : 3 Profils d’Utilisateurs\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n\n🟢 Cluster 1\nUtilisateurs Sains\n\n35% de la population\n~90 min/jour\nAnxiété: 12%\n\n\n🟡 Cluster 2\nUsage Modéré\n\n37% de la population\n~110 min/jour\nAnxiété: 18%\n\n\n🔴 Cluster 3\nZONE À RISQUE\n\n28% de la population\n~180 min/jour\nAnxiété: 32%",
+    "text": "🔬 Segmentation : 3 Profils d’Utilisateurs\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n\n🟡 Cluster 1\nUsage Modéré\n\n42% de la population\n~84 min/jour\nAnxiété: 21%\n\n\n🟢 Cluster 2\nUtilisateurs Prudents\n\n31% de la population\n~67 min/jour\n\nAnxiété: 16% ✅\n\n\n🔴 Cluster 3\nUsage Intensif\n\n27% de la population\n~150 min/jour\nAnxiété: 11% (!?)\n\n\n\n\n\n\n\n\n⚠️ Paradoxe Majeur\n\n\nLe Cluster 3 (usage le plus élevé) a l’anxiété LA PLUS FAIBLE !\nHypothèses explicatives : - Utilisateurs adaptés/résilients - Causalité inverse (anxieux → réduisent usage) - Facteurs de protection non mesurés",
     "crumbs": [
       "Presentations",
       "Impact des Réseaux Sociaux sur la Santé Mentale"
     ]
   },
   {
-    "objectID": "qmd/presentation.html#résultats-clés-en-60-secondes",
-    "href": "qmd/presentation.html#résultats-clés-en-60-secondes",
+    "objectID": "qmd/presentation.html#résultats-clés-la-réalité-complexe",
+    "href": "qmd/presentation.html#résultats-clés-la-réalité-complexe",
     "title": "Impact des Réseaux Sociaux sur la Santé Mentale",
-    "section": "💡 Résultats Clés en 60 Secondes",
-    "text": "💡 Résultats Clés en 60 Secondes\n\n4 CHIFFRES À RETENIR\n\n\n\n🎯 120 minutes/jour\nLe seuil critique\nAu-delà : anxiété ×2.5\n\n🔴 28.3%\nPopulation à risque\nCluster 3 : usage intensif\n\n📱 Instagram\nPlateforme #1 anxiogène\n68% des cas d’anxiété\n\n👶 18-25 ans\nGroupe vulnérable\n2× plus sensibles que 36+",
+    "section": "💡 Résultats Clés : La Réalité Complexe",
+    "text": "💡 Résultats Clés : La Réalité Complexe\n\n5 DÉCOUVERTES MAJEURES\n\n\n\n📊 Relation Non Linéaire\nCorrélation : r = -0.004\nPas de lien simple usage ↔︎ anxiété\n\n🟢 Profil Optimal : 67 min/jour\nCluster 2 (31% users)\nAnxiété la plus faible : 16%\n\n🔴 Paradoxe Usage Intensif\n150 min/jour → 11% anxiété\nUtilisateurs adaptés ou résilients\n\n🎯 Genre &gt; Temps d’Usage\nNon-binary : +21.6% risque\nFacteur le plus important du modèle\n\n⚠️ Hétérogénéité Importante\nPas de seuil universel\nImpact dépend du profil individuel\n\n📱 Plateformes Variables\nInstagram & Snapchat\nPlus anxiogènes que les autres",
     "crumbs": [
       "Presentations",
       "Impact des Réseaux Sociaux sur la Santé Mentale"
     ]
   },
   {
-    "objectID": "qmd/presentation.html#recommandations-stratégiques",
-    "href": "qmd/presentation.html#recommandations-stratégiques",
+    "objectID": "qmd/presentation.html#synthèse-ce-que-révèlent-vraiment-les-données",
+    "href": "qmd/presentation.html#synthèse-ce-que-révèlent-vraiment-les-données",
     "title": "Impact des Réseaux Sociaux sur la Santé Mentale",
-    "section": "🚀 Recommandations Stratégiques",
-    "text": "🚀 Recommandations Stratégiques\n\nCourt terme (3 mois)Moyen terme (6-12 mois)Long terme (2 ans)\n\n\n🎓 Sensibilisation\n\nCampagne “2h = ligne rouge”\nOutils d’auto-surveillance\nAlertes push personnalisées\n\n🏥 Intervention ciblée\n\nProgramme pour le Cluster 3 (28% population)\nAccompagnement psychologique\nGroupes de soutien\n\n\n\n🔬 Recherche & Développement\n\nÉtude longitudinale (suivi 12 mois)\nAlgorithme de détection précoce\nAnalyse spécifique par plateforme\n\n📊 Monitoring\n\nDashboard temps réel\nKPIs : % &gt;2h/jour, taux anxiété\nÉvaluation impact interventions\n\n\n\n🏛️ Politiques Publiques\n\nÉducation numérique obligatoire\nRégulation fonctionnalités addictives\nDroit à la déconnexion\n\n🌍 Collaboration Internationale\n\nStandards de sécurité mentale\nPartage de données recherche\nBest practices globales",
+    "section": "🔍 Synthèse : Ce que Révèlent VRAIMENT les Données",
+    "text": "🔍 Synthèse : Ce que Révèlent VRAIMENT les Données\n\nAnalyses DescriptivesModélisationLe Paradoxe ExpliquéLimites Critiques\n\n\n✅ Observations directes :\n\nTaux d’anxiété global : ~17-18%\nVariation visible entre niveaux d’usage\nDifférences marquées entre plateformes\n3 profils d’utilisateurs distincts émergent\n\n⚠️ Mais attention :\nCes observations ne prouvent PAS la causalité !\n\n\n🎯 Régression Logistique Multivariée :\nTemps d'usage : OR = 1.000 (EFFET NUL)\nÂge          : OR = 1.028 (+2.8%/an)\nGenre Male   : OR = 1.008 (négligeable)\nNon-binary   : OR = 1.216 (+21.6% !)\n📊 Corrélations :\nusage-anxiété     : r = -0.004\nengagement-anxiété: r = -0.021\nConclusion Modèle : Le temps d’usage N’EST PAS un prédicteur significatif\n\n\n🔬 Pourquoi cette différence ?\n\nAnalyses bivariées : comparent groupes sans contrôler autres variables\nAnalyse multivariée : contrôle pour âge, genre → effet disparaît\nClustering : groupe intensif MOINS anxieux (11%)\n\n💡 Explications Possibles :\n\nCausalité inverse : anxieux → réduisent usage\nSélection : seuls non-anxieux maintiennent usage élevé\nVariables omises : personnalité, support social, type contenu\nRelation en U : faible ET fort usage → moins d’anxiété\n\n\n\n⚠️ IMPORTANT À RETENIR :\n\nDonnées transversales → pas de causalité ### Limites Critiques\n\n⚠️ IMPORTANT À RETENIR :\n\nDonnées transversales → pas de causalité établie\nAuto-déclaration → biais de mesure possible\nVariables manquantes : personnalité, type de contenu, support social\nÉchantillon non probabiliste → généralisation limitée\n\n📌 Ce qu’on PEUT affirmer : - 3 profils d’utilisateurs distincts existent - Facteurs démographiques (genre, âge) importants - Relation usage-anxiété complexe et non linéaire\n📌 Ce qu’on NE PEUT PAS affirmer : - Que l’usage cause l’anxiété - Qu’il existe un seuil universel (ex: 2h) - Que réduire l’usage réduit automatiquement l’anxiété",
+    "crumbs": [
+      "Presentations",
+      "Impact des Réseaux Sociaux sur la Santé Mentale"
+    ]
+  },
+  {
+    "objectID": "qmd/presentation.html#recommandations-ajustées",
+    "href": "qmd/presentation.html#recommandations-ajustées",
+    "title": "Impact des Réseaux Sociaux sur la Santé Mentale",
+    "section": "🚀 Recommandations Ajustées",
+    "text": "🚀 Recommandations Ajustées\n\nCourt terme (3 mois)Moyen terme (6-12 mois)Long terme (2 ans)\n\n\n🎓 Sensibilisation Nuancée\n\n❌ “2h = ligne rouge universelle”\n✅ “Connaître son profil d’usage”\nOutils d’auto-évaluation personnalisée\nMessages adaptés par segment\n\n🏥 Interventions Ciblées\nFocus populations vulnérables : - Jeunes 18-25 ans (plus sensibles) - Personnes non-binaires (+21.6% risque) - Nouveaux utilisateurs - Accompagnement psychologique adapté\n\n\n🔬 Recherche Approfondie\nPRIORITÉ : Étude longitudinale - Suivi 12-24 mois minimum - Établir causalité - Observer évolution profils\nAnalyses complémentaires : - Type/qualité du contenu consommé - Variables de personnalité (Big Five) - Support social offline - Modèles d’interaction (âge × usage × plateforme)\n📊 Monitoring Intelligent\n\nDashboards par profil (pas juste temps brut)\nKPIs adaptés par segment\nSuivi évolution dans le temps\n\n\n\n🏛️ Politiques Basées sur Preuves\n\n❌ Régulation temps d’écran uniforme\n✅ Approche différenciée par profil\nProtection renforcée populations vulnérables\nÉducation numérique adaptative\n\n🌍 Collaboration Recherche\n\nStandards méthodologiques rigoureux\nPartage données longitudinales\nReproductibilité études\nMeta-analyses internationales",
     "crumbs": [
       "Presentations",
       "Impact des Réseaux Sociaux sur la Santé Mentale"
@@ -169,18 +180,18 @@
     "href": "qmd/presentation.html#plan-daction-immédiat",
     "title": "Impact des Réseaux Sociaux sur la Santé Mentale",
     "section": "📈 Plan d’Action Immédiat",
-    "text": "📈 Plan d’Action Immédiat\n\n\n\n\n\ngantt\n    title Feuille de Route des Interventions\n    dateFormat  YYYY-MM-DD\n    section Phase 1\n    Campagne sensibilisation    :a1, 2025-02-01, 90d\n    Formation professionnels    :a2, 2025-02-15, 60d\n    section Phase 2\n    Pilote Cluster 3           :b1, 2025-04-01, 120d\n    Outils auto-surveillance   :b2, 2025-03-01, 150d\n    section Phase 3\n    Étude longitudinale        :c1, 2025-06-01, 365d\n    Évaluation impact          :c2, 2025-10-01, 180d",
+    "text": "📈 Plan d’Action Immédiat\n\n\n\n\n\ngantt\n    title Feuille de Route Recherche & Interventions\n    dateFormat  YYYY-MM-DD\n    section Phase 1: Recherche\n    Étude longitudinale        :a1, 2025-02-01, 365d\n    Mesures objectives usage   :a2, 2025-03-01, 180d\n    section Phase 2: Interventions\n    Programme profils à risque :b1, 2025-04-01, 180d\n    Outils auto-évaluation    :b2, 2025-03-01, 240d\n    section Phase 3: Évaluation\n    Analyse impact            :c1, 2025-10-01, 180d\n    Publication résultats     :c2, 2026-01-01, 120d",
     "crumbs": [
       "Presentations",
       "Impact des Réseaux Sociaux sur la Santé Mentale"
     ]
   },
   {
-    "objectID": "qmd/presentation.html#conclusion-agir-maintenant",
-    "href": "qmd/presentation.html#conclusion-agir-maintenant",
+    "objectID": "qmd/presentation.html#conclusion-une-réalité-plus-complexe",
+    "href": "qmd/presentation.html#conclusion-une-réalité-plus-complexe",
     "title": "Impact des Réseaux Sociaux sur la Santé Mentale",
-    "section": "✅ Conclusion : Agir Maintenant",
-    "text": "✅ Conclusion : Agir Maintenant\n\nL’URGENCE EST RÉELLE\n\n\n\n✅ Relation prouvée : Usage excessif → Anxiété\n✅ Profils identifiés : 28% de la population à risque\n✅ Solutions actionnables : Interventions ciblées possibles\n✅ Fenêtre d’opportunité : Agir avant aggravation\n\n\n\n\n\n\n\n\n\nMessage final\n\n\n“2 heures par jour : la ligne rouge à ne pas franchir”\nProtégeons notre santé mentale à l’ère numérique.",
+    "section": "✅ Conclusion : Une Réalité Plus Complexe",
+    "text": "✅ Conclusion : Une Réalité Plus Complexe\n\nAU-DELÀ DES IDÉES REÇUES\n\n\n\n✅ Relation existe : Mais elle est complexe et non linéaire\n✅ Profils identifiés : 3 segments avec besoins différents\n✅ Facteurs clés : Genre et âge &gt; temps d’usage brut\n✅ Besoin critique : Études longitudinales pour causalité\n\n\n\n\n\n\n\n\n\nMessage Final Nuancé\n\n\n“Il n’existe pas de seuil universel. L’impact dépend de QUI vous êtes et COMMENT vous utilisez les réseaux sociaux”\nApproche personnalisée &gt; règle générale",
     "crumbs": [
       "Presentations",
       "Impact des Réseaux Sociaux sur la Santé Mentale"
@@ -191,18 +202,18 @@
     "href": "qmd/presentation.html#annexes-références",
     "title": "Impact des Réseaux Sociaux sur la Santé Mentale",
     "section": "📚 Annexes & Références",
-    "text": "📚 Annexes & Références\nMéthodologie Détaillée\n\nÉchantillon: N=1000 utilisateurs (18-70 ans)\nPériode: Décembre 2025\nVariables: 10 variables principales\nAnalyses: Régression logistique, K-means clustering\nLogiciels: R 4.3, WebR, Quarto\n\nLimitations\n\nDonnées transversales (pas de causalité directe)\nAuto-déclaration émotionnelle (biais possible)\nÉchantillon non-probabiliste\nNécessité d’études longitudinales\n\nProchaines Étapes\n\nValidation sur échantillon indépendant\nAnalyse qualitative complémentaire\nTest interventions pilotes\nPublication scientifique\n\nContact\n📧 zaineb.benfadhl@polytechnicien.tn 🐙 github.com/votre-repo\n🔗 linkedin.com/in/votre-profil",
+    "text": "📚 Annexes & Références\nMéthodologie Détaillée\n\nÉchantillon: N=1000 utilisateurs (18-70 ans)\nPériode: Janvier 2025\nVariables: 10 variables principales\nAnalyses:\n\nStatistiques descriptives\nRégression logistique multivariée\nK-means clustering (k=3)\nMatrice de corrélation\n\nLogiciels: R 4.3, WebR, Quarto, ggplot2, dplyr\n\nRésultats Statistiques Clés\nRégression Logistique :\nanxiety ~ usage + age + gender\nOR usage = 1.000 (p &gt; 0.05)\nOR age = 1.028 (p &lt; 0.05)\nOR non-binary = 1.216 (p &lt; 0.05)\nClustering K-means :\nk = 3 clusters optimaux\nCluster 1: 42% (84 min, 21% anxiété)\nCluster 2: 31% (67 min, 16% anxiété) ← Optimal\nCluster 3: 27% (150 min, 11% anxiété) ← Paradoxe\nCorrélations avec Anxiété :\nTemps d'usage: r = -0.004 (non significatif)\nEngagement: r = -0.021 (non significatif)\nMessages: r = +0.072 (faible)\nLimitations Reconnues\n\nCausalité : Données transversales, pas de lien causal établi\nMesure : Auto-déclaration (biais de désirabilité sociale)\nÉchantillon : Non-probabiliste, généralisation limitée\nVariables : Facteurs confondants non mesurés (personnalité, support social, type contenu)\nTemporalité : Snapshot instantané, pas d’évolution temporelle\n\nProchaines Étapes ESSENTIELLES\nPRIORITÉ ABSOLUE : 1. Étude longitudinale 12-24 mois 2. Mesures objectives temps d’écran 3. Variables psychologiques (Big Five, résilience) 4. Type et qualité du contenu\nAnalyses Complémentaires : 5. Modèles d’interaction (âge × usage × plateforme) 6. Tests interventions par profil 7. Validation échantillon indépendant\nContributions Scientifiques\n\nIdentification de 3 profils utilisateurs distincts\nRôle clé de l’identité de genre (+21.6% risque non-binaire)\nDémonstration complexité relation usage-anxiété\nNécessité approches personnalisées vs règles universelles\nImportance recherche longitudinale future\n\nDonnées & Reproductibilité\n📊 Données : Disponibles sur GitHub\n💻 Code : Analyse complète reproductible\n📝 Documentation : Méthodologie détaillée\n🔬 Transparence : Limites clairement exposées\nContact & Collaborations\n📧 Email : zaineb.benfadhl@polytechnicien.tn\n🐙 GitHub : github.com/zaineb-ben-fadhl/Project_R\n🔗 LinkedIn : [Votre profil]\nOuvert à : - Collaborations recherche - Suggestions méthodologiques - Critiques constructives - Partage de données",
     "crumbs": [
       "Presentations",
       "Impact des Réseaux Sociaux sur la Santé Mentale"
     ]
   },
   {
-    "objectID": "qmd/presentation.html#merci-questions",
-    "href": "qmd/presentation.html#merci-questions",
+    "objectID": "qmd/presentation.html#merci-pour-votre-attention",
+    "href": "qmd/presentation.html#merci-pour-votre-attention",
     "title": "Impact des Réseaux Sociaux sur la Santé Mentale",
-    "section": "Merci ! Questions ?",
-    "text": "Merci ! Questions ?\n\nÉchangeons !\n\n\n\n\n📊 Code & Données\nDisponible sur GitHub\n→ Accéder au repo\n\n📧 Contact\nzaineb.benfadhl@polytechnicien.tn",
+    "section": "Merci pour Votre Attention !",
+    "text": "Merci pour Votre Attention !\n\nQuestions & Discussion\n\n\n\n\n📊 Accès aux Données\nCode & Analyses Complètes\n→ GitHub Repository\nReproductibilité totale - Scripts R complets - Données source - Documentation méthodologique\n\n💬 Restons en Contact\nzaineb.benfadhl@polytechnicien.tn\nIntéressée par : - Collaborations de recherche - Feedback méthodologique - Discussions sur les limites - Partage d’expériences\nLa science avance par le dialogue !\n\n\n\n\n\n\n\n\n\n💡 Retenez l’Essentiel\n\n\nLa relation entre réseaux sociaux et santé mentale est bien plus complexe qu’un simple “trop de temps = anxiété”. L’approche personnalisée basée sur les profils est la voie d’avenir.",
     "crumbs": [
       "Presentations",
       "Impact des Réseaux Sociaux sur la Santé Mentale"
@@ -213,35 +224,49 @@
     "href": "index.html",
     "title": "Analyse statistique de l’impact des réseaux sociaux sur la santé mentale",
     "section": "",
-    "text": "Ce projet présente une analyse statistique complète visant à quantifier la relation entre l’usage des réseaux sociaux et l’anxiété numérique. L’étude combine des méthodes statistiques avancées avec la visualisation de données pour fournir des insights actionnables aux professionnels de santé mentale et aux décideurs politiques.\n\n\nÀ l’ère du numérique, 4,9 milliards d’utilisateurs passent en moyenne 2h30 par jour sur les réseaux sociaux. Cette hyperconnexion s’accompagne d’une augmentation significative des troubles anxieux, particulièrement chez les jeunes adultes. Le paradoxe de l’hyperconnexion - censés nous rapprocher, ces outils génèrent comparaison sociale, FOMO (Fear of Missing Out) et dépendance comportementale.\n\n\n\n\nQuantifier la relation entre temps d’usage quotidien et prévalence de l’anxiété\nIdentifier les profils d’utilisateurs à risque élevé\nComparer l’impact émotionnel des différentes plateformes sociales\nDévelopper un modèle prédictif de l’anxiété numérique\nProposer des interventions ciblées pour la prévention et l’accompagnement"
+    "text": "Ce projet présente une analyse statistique complète visant à quantifier la relation entre l’usage des réseaux sociaux et l’anxiété numérique. L’étude combine des méthodes statistiques avancées avec la visualisation de données pour fournir des insights actionnables aux professionnels de santé mentale et aux décideurs politiques.\n\nÀ l’ère du numérique, 4,9 milliards d’utilisateurs passent en moyenne 2h30 par jour sur les réseaux sociaux. Cette hyperconnexion s’accompagne d’une augmentation significative des troubles anxieux, particulièrement chez les jeunes adultes. Le paradoxe de l’hyperconnexion - censés nous rapprocher, ces outils génèrent comparaison sociale, FOMO (Fear of Missing Out) et dépendance comportementale.\n\n\n\nQuantifier la relation entre temps d’usage quotidien et prévalence de l’anxiété\n\nIdentifier les profils d’utilisateurs à risque élevé\n\nComparer l’impact émotionnel des différentes plateformes sociales\n\nDévelopper un modèle prédictif de l’anxiété numérique\n\nProposer des interventions ciblées pour la prévention et l’accompagnement"
   },
   {
     "objectID": "index.html#introduction",
     "href": "index.html#introduction",
     "title": "Analyse statistique de l’impact des réseaux sociaux sur la santé mentale",
     "section": "",
-    "text": "Ce projet présente une analyse statistique complète visant à quantifier la relation entre l’usage des réseaux sociaux et l’anxiété numérique. L’étude combine des méthodes statistiques avancées avec la visualisation de données pour fournir des insights actionnables aux professionnels de santé mentale et aux décideurs politiques.\n\n\nÀ l’ère du numérique, 4,9 milliards d’utilisateurs passent en moyenne 2h30 par jour sur les réseaux sociaux. Cette hyperconnexion s’accompagne d’une augmentation significative des troubles anxieux, particulièrement chez les jeunes adultes. Le paradoxe de l’hyperconnexion - censés nous rapprocher, ces outils génèrent comparaison sociale, FOMO (Fear of Missing Out) et dépendance comportementale.\n\n\n\n\nQuantifier la relation entre temps d’usage quotidien et prévalence de l’anxiété\nIdentifier les profils d’utilisateurs à risque élevé\nComparer l’impact émotionnel des différentes plateformes sociales\nDévelopper un modèle prédictif de l’anxiété numérique\nProposer des interventions ciblées pour la prévention et l’accompagnement"
+    "text": "Ce projet présente une analyse statistique complète visant à quantifier la relation entre l’usage des réseaux sociaux et l’anxiété numérique. L’étude combine des méthodes statistiques avancées avec la visualisation de données pour fournir des insights actionnables aux professionnels de santé mentale et aux décideurs politiques.\n\nÀ l’ère du numérique, 4,9 milliards d’utilisateurs passent en moyenne 2h30 par jour sur les réseaux sociaux. Cette hyperconnexion s’accompagne d’une augmentation significative des troubles anxieux, particulièrement chez les jeunes adultes. Le paradoxe de l’hyperconnexion - censés nous rapprocher, ces outils génèrent comparaison sociale, FOMO (Fear of Missing Out) et dépendance comportementale.\n\n\n\nQuantifier la relation entre temps d’usage quotidien et prévalence de l’anxiété\n\nIdentifier les profils d’utilisateurs à risque élevé\n\nComparer l’impact émotionnel des différentes plateformes sociales\n\nDévelopper un modèle prédictif de l’anxiété numérique\n\nProposer des interventions ciblées pour la prévention et l’accompagnement"
   },
   {
     "objectID": "index.html#méthodologie",
     "href": "index.html#méthodologie",
     "title": "Analyse statistique de l’impact des réseaux sociaux sur la santé mentale",
-    "section": "2 Méthodologie",
-    "text": "2 Méthodologie\nL’approche méthodologique combine :\n\n\n\nCadre méthodologique du projet\n\n\nÉtape\nOutils\nRésultat\n\n\n\n\n1. Acquisition des données\nreadr, CSV dataset N=1000\nDataset structuré (10 variables)\n\n\n2. Nettoyage et prétraitement\ndplyr, janitor, stringr\nDonnées harmonisées et validées\n\n\n3. Analyse exploratoire\nggplot2, corrplot\nTendances usage-anxiété identifiées\n\n\n4. Construction d'indicateurs\nScores d'engagement, variables dérivées\nIndice de Risque Psychologique\n\n\n5. Modélisation statistique\nRégression logistique multivariée\nOdds ratios et facteurs prédictifs\n\n\n6. Segmentation\nK-means clustering\n3 profils d'utilisateurs distincts\n\n\n7. Visualisation\nggplot2, gridExtra, thèmes personnalisés\nTableaux de bord analytiques\n\n\n8. Interprétation\nAnalyse critique, recommandations\nRapport avec recommandations"
+    "section": "\n2 Méthodologie",
+    "text": "2 Méthodologie\nL’approche méthodologique combine :\n\n\n\nCadre méthodologique du projet\n\nÉtape\nOutils\nRésultat\n\n\n\n1. Acquisition des données\nreadr, CSV dataset N=1000\nDataset structuré (10 variables)\n\n\n2. Nettoyage et prétraitement\ndplyr, janitor, stringr\nDonnées harmonisées et validées\n\n\n3. Analyse exploratoire\nggplot2, corrplot\nTendances usage-anxiété identifiées\n\n\n4. Construction d'indicateurs\nScores d'engagement, variables dérivées\nIndice de Risque Psychologique\n\n\n5. Modélisation statistique\nRégression logistique multivariée\nOdds ratios et facteurs prédictifs\n\n\n6. Segmentation\nK-means clustering\n3 profils d'utilisateurs distincts\n\n\n7. Visualisation\nggplot2, gridExtra, thèmes personnalisés\nTableaux de bord analytiques\n\n\n8. Interprétation\nAnalyse critique, recommandations\nRapport avec recommandations"
   },
   {
     "objectID": "index.html#dataset-et-variables",
     "href": "index.html#dataset-et-variables",
     "title": "Analyse statistique de l’impact des réseaux sociaux sur la santé mentale",
-    "section": "3 Dataset et Variables",
-    "text": "3 Dataset et Variables\n\n3.1 Description du dataset\n\nSource : Données synthétiques représentatives d’utilisateurs de réseaux sociaux\nTaille : N = 1000 observations après nettoyage\nPériode : Décembre 2024 - Janvier 2025\nScope géographique : Utilisateurs internationaux, 18-70 ans\n\n\n\n3.2 Variables principales\n\n\n\nDescription des variables du dataset\n\n\nVariable\nType\nDescription\nRôle\n\n\n\n\nAge\nNumérique\nÂge de l'utilisateur (18-70 ans)\nPrédicteur\n\n\nGender\nCatégorielle\nMale, Female, Non-binary\nPrédicteur\n\n\nPlatform\nCatégorielle\nInstagram, Facebook, Twitter, LinkedIn, etc.\nPrédicteur\n\n\nDaily_Usage_Time\nNumérique\nMinutes d'utilisation quotidienne\nPrédicteur principal\n\n\nPosts_Per_Day\nNumérique\nNombre de publications par jour\nPrédicteur\n\n\nLikes_Received\nNumérique\nLikes reçus quotidiennement\nPrédicteur\n\n\nComments_Received\nNumérique\nCommentaires reçus quotidiennement\nPrédicteur\n\n\nMessages_Sent\nNumérique\nMessages privés envoyés quotidiennement\nPrédicteur\n\n\nDominant_Emotion\nCatégorielle\nAnxiety, Happiness, Sadness, Anger, Boredom, Neutral\nVariable cible\n\n\nUsage_Level\nCatégorielle (dérivée)\nFaible (&lt;1h), Modéré (1-2h), Élevé (2-3h), Très élevé (&gt;3h)\nVariable analytique\n\n\n\n\n\n\n\n3.3 Recherches futures\n🔬 Étude longitudinale : Suivi sur 12-24 mois pour établir causalité\n🔬 Analyse qualitative : Entretiens approfondis sur les mécanismes psychologiques\n🔬 Intervention contrôlée : Test d’efficacité de programmes de réduction d’usage\n🔬 Élargissement : Intégrer données physiologiques (sommeil, activité physique)"
+    "section": "\n3 Dataset et Variables",
+    "text": "3 Dataset et Variables\n\n3.1 Description du dataset\n\n\nSource : Données synthétiques représentatives d’utilisateurs de réseaux sociaux\n\nTaille : N = 1000 observations après nettoyage\n\nPériode : Décembre 2024 - Janvier 2025\n\nScope géographique : Utilisateurs internationaux, 18-70 ans\n\n3.2 Variables principales\n\n\n\nDescription des variables du dataset\n\nVariable\nType\nDescription\nRôle\n\n\n\nAge\nNumérique\nÂge de l'utilisateur (18-70 ans)\nPrédicteur\n\n\nGender\nCatégorielle\nMale, Female, Non-binary\nPrédicteur\n\n\nPlatform\nCatégorielle\nInstagram, Facebook, Twitter, LinkedIn, etc.\nPrédicteur\n\n\nDaily_Usage_Time\nNumérique\nMinutes d'utilisation quotidienne\nPrédicteur principal\n\n\nPosts_Per_Day\nNumérique\nNombre de publications par jour\nPrédicteur\n\n\nLikes_Received\nNumérique\nLikes reçus quotidiennement\nPrédicteur\n\n\nComments_Received\nNumérique\nCommentaires reçus quotidiennement\nPrédicteur\n\n\nMessages_Sent\nNumérique\nMessages privés envoyés quotidiennement\nPrédicteur\n\n\nDominant_Emotion\nCatégorielle\nAnxiety, Happiness, Sadness, Anger, Boredom, Neutral\nVariable cible\n\n\nUsage_Level\nCatégorielle (dérivée)\nFaible (&lt;1h), Modéré (1-2h), Élevé (2-3h), Très élevé (&gt;3h)\nVariable analytique"
+  },
+  {
+    "objectID": "index.html#livrables-du-projet",
+    "href": "index.html#livrables-du-projet",
+    "title": "Analyse statistique de l’impact des réseaux sociaux sur la santé mentale",
+    "section": "\n4 Livrables du projet",
+    "text": "4 Livrables du projet\n\n4.1 Documents analytiques\n\n\nPrésentation Revealjs : Slides interactives avec analyses WebR en temps réel\n\nRapport détaillé : Document live-html avec code R reproductible\n\nDataset nettoyé : data/train_clean.csv prêt pour analyses complémentaires\n\n4.2 Code source\n\n\nScripts R : Pipeline complet de nettoyage, analyse et visualisation\n\nFonctions réutilisables : Bibliothèque de fonctions pour analyses similaires\n\nDocumentation : Guide méthodologique pour reproduction de l’étude"
+  },
+  {
+    "objectID": "index.html#perspectives-et-limites",
+    "href": "index.html#perspectives-et-limites",
+    "title": "Analyse statistique de l’impact des réseaux sociaux sur la santé mentale",
+    "section": "\n5 Perspectives et limites",
+    "text": "5 Perspectives et limites\n\n5.1 Forces de l’étude\nApproche multidimensionnelle : Combine statistiques descriptives, inférentielles et prédictivesSegmentation actionnable : Identification claire des profils à risqueVisualisations riches : Graphiques interactifs facilitant l’interprétationReproductibilité : Code R documenté et dataset accessible\n\n5.2 Limitations\nNature transversale : Pas de lien de causalité direct établiAuto-déclaration : Biais potentiel dans le reporting des émotionsÉchantillon : Non-probabiliste, représentativité à nuancerVariables omises : Autres facteurs de stress non mesurés\n\n5.3 Recherches futures\nÉtude longitudinale : Suivi sur 12-24 mois pour établir causalitéAnalyse qualitative : Entretiens approfondis sur les mécanismes psychologiquesIntervention contrôlée : Test d’efficacité de programmes de réduction d’usageÉlargissement : Intégrer données physiologiques (sommeil, activité physique)"
   },
   {
     "objectID": "index.html#contacts-et-ressources",
     "href": "index.html#contacts-et-ressources",
     "title": "Analyse statistique de l’impact des réseaux sociaux sur la santé mentale",
-    "section": "4 Contacts et ressources",
-    "text": "4 Contacts et ressources\nAuteur : Zaineb ben Fadhl\nEmail : zaineb.benfadhl@polytechnicien.tn\n\nCe projet a été réalisé dans le cadre du module “Statistiques Appliquées avec R” - Janvier 2025"
+    "section": "\n6 Contacts et ressources",
+    "text": "6 Contacts et ressources\nAuteur : Zaineb ben FadhlEmail : zaineb.benfadhl@polytechnicien.tnGitHub : github.com/zaineb-ben-fadhl/Project_RLinkedIn : linkedin.com/in/votre-profil\n\nCe projet a été réalisé dans le cadre du module “Statistiques Appliquées avec R” - Janvier 2025"
   },
   {
     "objectID": "qmd/Project_R.html",
@@ -303,7 +328,7 @@
     "href": "qmd/Project_R.html#étape-4-visualisations-analytiques",
     "title": "Analyse statistique des usages des réseaux sociaux et de leurs effets émotionnels",
     "section": "Étape 4 : Visualisations analytiques",
-    "text": "Étape 4 : Visualisations analytiques\n\n4.1 Analyse exploratoire des distributions\n\n\n\n\n\n\nInterprétation des graphiques :\nGraphique gauche : La distribution du temps d’usage montre une asymétrie positive, indiquant que quelques utilisateurs ont des temps d’usage très élevés. La moyenne et la médiane proches suggèrent une distribution relativement équilibrée.\nGraphique droit : La distribution d’âge présente plusieurs modes, reflétant probablement différentes générations d’utilisateurs. La concentration autour de 25-30 ans correspond à la population jeune adulte, principale utilisatrice des réseaux sociaux.\n\n\n4.2 Analyse comparative par genre et âge\n\n\n\n\n\n\nInterprétation des graphiques :\nGraphique gauche (Genre) : Les différences entre genres sont visibles mais modérées. Les femmes montrent une médiane légèrement plus élevée, tandis que les non-binaires présentent la plus grande variabilité. Les points de données individuels révèlent la diversité des comportements au sein de chaque groupe.\nGraphique droit (Âge) : La tendance décroissante avec l’âge est claire : les 18-25 ans sont les plus grands utilisateurs. La forme des violons montre des distributions différentes : bimodale pour les 26-30 ans, plus concentrée pour les 36+.\n\n\n4.3 Analyse des plateformes et émotions\n\n\n\n\n\n\nInterprétation des graphiques :\nGraphique gauche (Plateformes) : Instagram domine nettement en termes de temps d’engagement moyen, suivi de Facebook. LinkedIn présente l’utilisation la plus faible, reflétant sa nature professionnelle. La taille relative des barres montre la popularité de chaque plateforme.\nGraphique droit (Heatmap) : Cette visualisation révèle des associations spécifiques plateforme-émotion. Par exemple, LinkedIn est fortement associé à l’ennui (Boredom), tandis qu’Instagram génère à la fois du bonheur et de l’anxiété. Ces patterns suggèrent que différentes plateformes répondent à différents besoins psychologiques.\n\n\n4.4 Relation usage-anxiété\n\n\n\n\n\n\nInterprétation des graphiques :\nGraphique gauche (Tendance) : La relation dose-réponse est claire : le taux d’anxiété augmente régulièrement avec le temps d’usage. L’absence de chevauchement des intervalles de confiance indique des différences statistiquement significatives entre les niveaux d’usage.\nGraphique droit (Modélisation) : La courbe sigmoïde caractéristique de la régression logistique montre comment la probabilité d’anxiété augmente de façon non linéaire avec le temps d’usage. L’Odds Ratio de 1.016 signifie qu’à chaque minute supplémentaire d’usage quotidien, les chances d’anxiété augmentent de 1.6%.",
+    "text": "Étape 4 : Visualisations analytiques\n\n4.1 Analyse exploratoire des distributions\n\n\n\n\n\n\n\n\n4.2 Analyse comparative par genre et âge\n\n\n\n\n\n\nInterprétation des graphiques :\nGraphique gauche (Genre) : Les différences entre genres sont visibles mais modérées. Les femmes montrent une médiane légèrement plus élevée, tandis que les non-binaires présentent la plus grande variabilité. Les points de données individuels révèlent la diversité des comportements au sein de chaque groupe.\nGraphique droit (Âge) : La tendance décroissante avec l’âge est claire : les 18-25 ans sont les plus grands utilisateurs. La forme des violons montre des distributions différentes : bimodale pour les 26-30 ans, plus concentrée pour les 36+.\n\n\n4.3 Analyse des plateformes et émotions\n\n\n\n\n\n\n\n\n4.4 Relation usage-anxiété\n\n\n\n\n\n\nInterprétation des graphiques :\nGraphique gauche (Tendance) : La relation dose-réponse est claire : le taux d’anxiété augmente régulièrement avec le temps d’usage. L’absence de chevauchement des intervalles de confiance indique des différences statistiquement significatives entre les niveaux d’usage.\nGraphique droit (Modélisation) : La courbe sigmoïde caractéristique de la régression logistique montre comment la probabilité d’anxiété augmente de façon non linéaire avec le temps d’usage. L’Odds Ratio de 1.016 signifie qu’à chaque minute supplémentaire d’usage quotidien, les chances d’anxiété augmentent de 1.6%.",
     "crumbs": [
       "Projects",
       "Analyse statistique des usages des réseaux sociaux et de leurs effets émotionnels"
@@ -314,7 +339,7 @@
     "href": "qmd/Project_R.html#étape-5-modélisation-statistique-avancée",
     "title": "Analyse statistique des usages des réseaux sociaux et de leurs effets émotionnels",
     "section": "Étape 5 : Modélisation statistique avancée",
-    "text": "Étape 5 : Modélisation statistique avancée\n\n5.1 Analyse par régression logistique multivariée\n\n\n\n\n\n\nInterprétation : Le modèle de régression logistique révèle plusieurs insights importants. Le temps d’usage quotidien est le prédicteur le plus fort de l’anxiété, confirmant l’hypothèse principale. L’âge montre un effet protecteur modeste. Le genre n’apparaît pas comme un facteur significatif dans ce modèle multivarié. La qualité du modèle (Pseudo R²) indique une bonne capacité explicative compte tenu de la complexité du phénomène.\n\n\n5.2 Segmentation par clustering\n\n\n\n\n\n\nInterprétation : Le clustering identifie trois segments distincts d’utilisateurs :\nCluster 1 (34.9%) : Utilisateurs modérés avec faible anxiété - profil le plus sain\nCluster 2 (36.8%) : Faible usage et engagement - utilisateurs occasionnels\nCluster 3 (28.3%) : Fort usage et haute anxiété - groupe à risque nécessitant une attention particulière\nLa méthode du coude confirme que k=3 est un choix optimal, offrant un bon compromis entre simplicité et pouvoir discriminatoire.",
+    "text": "Étape 5 : Modélisation statistique avancée\n\n5.1 Analyse par régression logistique multivariée\n\n\n\n\n\n\nInterprétation : Le modèle de régression logistique révèle plusieurs insights importants. Le temps d’usage quotidien est le prédicteur le plus fort de l’anxiété, confirmant l’hypothèse principale. L’âge montre un effet protecteur modeste. Le genre n’apparaît pas comme un facteur significatif dans ce modèle multivarié. La qualité du modèle (Pseudo R²) indique une bonne capacité explicative compte tenu de la complexité du phénomène.\n\n\n5.2 Segmentation par clustering\n\n\n\n\n\n\nInterprétation du Clustering : 3 Profils Distincts Résultats du Clustering K-means (k=3) Le clustering identifie trois segments distincts d’utilisateurs avec des résultats contre-intuitifs :\n🟡 Cluster 1 (42.2%) : Usage Modéré - Anxiété Modérée Profil : Utilisateurs “moyens”\nProportion : Plus grand groupe (42%) Usage quotidien : ~84 minutes/jour Anxiété : 21.1% - taux le plus élevé des trois clusters (!!) Caractéristiques :\nEngagement modéré Ni très actifs, ni très passifs Paradoxalement le groupe le MOINS bien protégé\nInterprétation : Groupe intermédiaire sans stratégie claire d’usage\n🟢Cluster 2 (31.2%) : Usage Prudent - Profil Optimal Profil : Les “utilisateurs sains” ✅\nProportion : Second groupe (31%) Usage quotidien : ~67 minutes/jour (le plus faible) Anxiété : 16.3% - taux le PLUS BAS ✅ Caractéristiques :\nUsage limité et contrôlé Engagement raisonnable Le profil à promouvoir\n💡 Interprétation : Usage modéré = protection optimale contre l’anxiété\n🔴 Cluster 3 (26.6%) : Usage Intensif - Paradoxe Majeur Profil : Les “power users” résilients (!?)\nProportion : Plus petit groupe (27%) Usage quotidien : ~150 minutes/jour (le plus élevé - 2.5h) Anxiété : 11.3% - taux TRÈS BAS (!!) Caractéristiques :\nEngagement très élevé Usage intensif mais… Moins anxieux que les autres",
     "crumbs": [
       "Projects",
       "Analyse statistique des usages des réseaux sociaux et de leurs effets émotionnels"
@@ -325,7 +350,7 @@
     "href": "qmd/Project_R.html#étape-6-synthèse-et-recommandations",
     "title": "Analyse statistique des usages des réseaux sociaux et de leurs effets émotionnels",
     "section": "Étape 6 : Synthèse et recommandations",
-    "text": "Étape 6 : Synthèse et recommandations\n\n\n\n\n\n\nInterprétation finale : Cette synthèse présente une vue d’ensemble cohérente des résultats. L’analyse confirme l’hypothèse principale tout en nuancant notre compréhension des mécanismes en jeu. Les recommandations proposées sont directement dérivées des insights analytiques et ciblent différents niveaux d’intervention (individuel, communautaire, politique).",
+    "text": "Étape 6 : Synthèse et recommandations",
     "crumbs": [
       "Projects",
       "Analyse statistique des usages des réseaux sociaux et de leurs effets émotionnels"
@@ -336,7 +361,7 @@
     "href": "qmd/Project_R.html#conclusion",
     "title": "Analyse statistique des usages des réseaux sociaux et de leurs effets émotionnels",
     "section": "Conclusion",
-    "text": "Conclusion\nCette étude démontre la puissance des méthodes analytiques modernes pour comprendre les relations complexes entre comportements numériques et santé mentale. L’approche méthodologique rigoureuse, combinant statistiques descriptives, modélisation prédictive et segmentation, fournit des insights actionnables pour la prévention et l’intervention.\nContributions principales :\nConfirmation quantitative de la relation usage-anxiété\nIdentification de profils à risque spécifiques\nAnalyse comparative des plateformes sociales\nProposition d’un cadre d’intervention multidimensionnel\nLimitations et perspectives :\nNature transversale des données (causalité à établir)\nAuto-déclaration des émotions (biais potentiel)\nNécessité d’études longitudinales pour validation\nCette recherche ouvre la voie à des interventions ciblées et personnalisées pour promouvoir un usage sain des technologies numériques.",
+    "text": "Conclusion\nCette étude démontre la puissance des méthodes analytiques modernes pour comprendre les relations complexes entre comportements numériques et santé mentale. L’approche méthodologique rigoureuse, combinant statistiques descriptives, modélisation prédictive et segmentation, fournit des insights actionnables pour la prévention et l’intervention.",
     "crumbs": [
       "Projects",
       "Analyse statistique des usages des réseaux sociaux et de leurs effets émotionnels"
